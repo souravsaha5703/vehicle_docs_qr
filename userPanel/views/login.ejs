@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/output.css">
+    <title>User Login</title>
+</head>
+
+<body class="bg-slate-950">
+    <div class="bg-hero bg-repeat w-full h-screen flex justify-center items-center">
+        <div
+            class="w-96 bg-slate-950 rounded-xl text-center flex flex-col items-center justify-center p-10 overflow-hidden drop-shadow-lg">
+            <h2 class="text-slate-100 text-4xl font-noto text-center mt-5 font-semibold">Login</h2>
+            <p class="text-slate-400 font-medium text-base mt-5 font-noto">Login into your account to access your
+                details</p>
+            <form class="flex flex-col w-full items-center justify-center mt-5" method="post" action="/signin">
+                <input type="email" placeholder="Enter Email Address" autocomplete="off" name="email" required id="email"
+                    class="bg-transparent border border-slate-600 rounded-md h-12 pr-5 pl-4 mb-2 outline-none focus:border-slate-300 font-noto font-normal text-slate-100" />
+                <button class="bg-blue-500 border-none rounded-md mt-3 px-16 py-2 font-noto font-normal text-2xl cursor-pointer transition-all duration-200 ease-linear hover:bg-blue-800 text-slate-100" type="submit">Login</button>
+            </form>
+            <p class="text-slate-100 font-medium text-base mt-3 font-noto">Don't have an account ?</p>
+            <a href="./signup" class="text-blue-600 cursor-pointer font-normal text-base mb-4 font-noto mt-1">Sign Up</a>
+        </div>
+    </div>
+</body>
+
+</html>

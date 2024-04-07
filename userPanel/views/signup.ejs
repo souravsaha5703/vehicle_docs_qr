@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/output.css">
+    <script src="https://kit.fontawesome.com/e04331d407.js" crossorigin="anonymous"></script>
+    <title>User Sign Up</title>
+</head>
+
+<body class="bg-slate-950">
+    <div class="bg-hero bg-repeat w-full h-screen flex justify-center items-center">
+        <div
+            class="w-96 bg-slate-950 rounded-xl text-center flex flex-col items-center justify-center p-10 overflow-hidden drop-shadow-lg">
+            <h2 class="text-slate-100 text-4xl font-noto text-center mt-5 font-semibold">Sign up</h2>
+            <p class="text-slate-400 font-medium text-base mt-5 font-noto">Create a account and join us to our journey
+            </p>
+            <form class="flex flex-col w-full mt-5" method="post" action="./registeruser">
+                <input type="text" placeholder="Enter Full Name" name="fullname" required autocomplete="off"
+                    id="fullname" onkeyup="checkName()"
+                    class="bg-transparent border border-slate-600 rounded-md h-12 pr-12 pl-4 mb-3 outline-none focus:border-slate-300 font-noto font-medium text-slate-100" />
+                    <span class="text-left mb-2 hidden" id="nameError"><i class="fa-solid fa-circle-xmark text-lg mr-1"></i> Error Message</span>
+                <input type="email" placeholder="Enter Email Address" name="email" required autocomplete="off"
+                    id="email" onkeyup="checkEmail()"
+                    class="bg-transparent border border-slate-600 rounded-md h-12 pr-12 pl-4 mb-3 outline-none focus:border-slate-300 font-noto font-medium text-slate-100" />
+                    <span class="text-left mb-2 hidden" id="emailError"><i class="fa-solid fa-circle-xmark text-lg mr-1"></i> Error Message</span>
+                <input type="text" placeholder="Enter Phone Number" name="phonenumber" required autocomplete="off"
+                    id="phonenumber" onkeyup="checkPhone()"
+                    class="bg-transparent border border-slate-600 rounded-md h-12 pr-12 pl-4 mb-3 outline-none focus:border-slate-300 font-noto font-medium text-slate-100" />
+                    <span class="text-left mb-2 hidden" id="phError"><i class="fa-solid fa-circle-xmark text-lg mr-1"></i> Error Message</span>
+                <button
+                    class="bg-blue-500 border-none rounded-md mt-2 px-16 py-2 font-noto font-normal text-2xl cursor-pointer transition-all duration-200 ease-linear hover:bg-blue-800 text-slate-100"
+                    type="submit" onclick="return validateForm()">Create Account</button>
+            </form>
+            <div class="bg-red-100 hidden border mt-3 border-red-400 text-red-700 font-noto text-left text-sm px-4 py-2 rounded relative"
+                id="errorMessage" role="alert">
+                <span class="block sm:inline"><i class="fa-solid fa-circle-xmark text-lg mr-1"></i> Error Message</span>
+            </div>
+            <p class="text-slate-100 font-medium text-base mt-3 font-noto">Already have an account ?</p>
+            <a href="./" class="text-blue-600 cursor-pointer font-normal text-base mb-4 font-noto mt-1">Login</a>
+        </div>
+    </div>
+
+    <script src="../javascripts/signup.js"></script>
+</body>
+
+</html>

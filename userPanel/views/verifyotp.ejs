@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/output.css">
+    <title>Verify otp</title>
+</head>
+
+<body class="bg-slate-950">
+    <div class="bg-hero bg-repeat w-full h-screen flex justify-center items-center">
+        <div class="max-w-md mx-auto bg-slate-950 shadow-md rounded-md px-8 py-6 flex items-center justify-center flex-col">
+            <h4 class="text-slate-100 text-2xl font-noto text-center mt-5 font-semibold">OTP Verification</h4>
+            <p class="text-slate-400 font-normal mb-4 text-base mt-5 font-noto text-center">We have sent a otp to your registered mail address</p>
+            <form class="mt-4" action="otpverification" method="post">
+                <div class="mb-4">
+                    <input
+                        class="bg-transparent border border-slate-600 rounded-md h-12 pr-12 pl-4 mb-2 outline-none focus:border-slate-300 font-noto font-normal text-slate-100"
+                        id="otp" type="text" name="otp" placeholder="Enter OTP" maxlength="6">
+                </div>
+                <div class="flex items-center justify-between">
+                    <button
+                        class="bg-blue-500 border-none rounded-md px-6 py-2 font-noto font-normal text-xl cursor-pointer transition-all duration-200 ease-linear hover:bg-blue-800 text-slate-100"
+                        type="submit">
+                        Verify
+                    </button>
+                    <a class="inline-block align-baseline font-noto font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                        Resend OTP
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
