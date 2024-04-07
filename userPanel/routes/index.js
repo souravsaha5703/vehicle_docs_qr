@@ -4,6 +4,8 @@ const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
 const router = express.Router();
 const otpModel = require("../models/otpmodel");
 const userModel=require("../models/usermodel");
+const {setUser}=require("../service/authtoken");
+const {restrictedToLoggedInUserOnly}=require("../middlewares/auth");
 
 const mailerSend = new MailerSend({
     apiKey: process.env.MAILERSEND_API_KEY,
@@ -51,6 +53,10 @@ router.post("/otpverification",async (req,res)=>{
         if(user){
             console.log("User Verified");
             const updateStatus=await userModel.findOneAndUpdate({_id:req.session.useridentity},{validUser:true},{new:true});
+            const selectUser=await userModel.findOne({_id:req.session.useridentity});
+            
+            const token=setUser(selectUser);
+            res.cookie("uid",token);
             res.redirect("/home");
         }else{
             console.log("User not exists");
@@ -61,8 +67,9 @@ router.post("/otpverification",async (req,res)=>{
     }
 });
 
-router.get("/home",(req,res)=>{
-    res.render("home",{title:"home"});
+router.get("/home",restrictedToLoggedInUserOnly,(req,res)=>{
+    if(!req.user) return res.redirect("/")
+    res.render("home",{title:req.user.email});
 });
 
 router.get("/error",(req,res)=>{
