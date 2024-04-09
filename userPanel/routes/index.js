@@ -69,7 +69,12 @@ router.post("/otpverification",async (req,res)=>{
 
 router.get("/home",restrictedToLoggedInUserOnly,(req,res)=>{
     if(!req.user) return res.redirect("/")
-    res.render("home",{title:req.user.email});
+    const userObjectData={
+        userName:req.user.name,
+        userEmail:req.user.email,
+        userPhone:req.user.ph
+    }
+    res.render("home",{userObjectData});
 });
 
 router.get("/error",(req,res)=>{
