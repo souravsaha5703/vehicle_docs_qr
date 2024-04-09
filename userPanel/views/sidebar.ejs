@@ -1,0 +1,59 @@
+<button data-drawer-target="separator-sidebar" data-drawer-toggle="separator-sidebar" aria-controls="separator-sidebar"
+    type="button"
+    class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-slate-50 rounded-lg sm:hidden hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200">
+    <span class="sr-only">Open sidebar</span>
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path clip-rule="evenodd" fill-rule="evenodd"
+            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+        </path>
+    </svg>
+</button>
+
+<aside id="separator-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen" aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-slate-950 w-full flex flex-col items-center justify-start">
+        <h1 class="text-slate-50 text-3xl my-5 font-oswald font-semibold text-center">CarDocs 360</h1>
+        <img src="../images/user-person-profile.svg" alt="profile image" class="size-20 bg-cover bg-center">
+        <h3 class="text-white text-xl mt-2 mb-5 font-noto font-semibold text-center">
+            <%= userObjectData.userName %>
+        </h3>
+        <ul class="space-y-2 font-medium font-poppins text-lg">
+            <li>
+                <a href="#"
+                    class="flex items-center p-3 text-slate-50 rounded-lg hover:bg-white hover:text-slate-950 group">
+                    <svg class="flex-shrink-0 size-7 text-slate-50 transition duration-75 group-hover:text-slate-950"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                        <path
+                            d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                        <path
+                            d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                    </svg>
+                    <span class="ms-3 capitalize">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#"
+                    class="flex items-center p-3 text-slate-50 rounded-lg hover:bg-white hover:text-slate-950 group">
+                    <svg class="flex-shrink-0 size-7 text-slate-50 transition duration-75 group-hover:text-slate-950"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 60 60">
+                        <path
+                            d="M2.84375 13C1.273438 13 0 14.277344 0 15.84375L0 42C0 43.566406 1.429688 45 3 45L7.09375 45C7.570313 47.835938 10.03125 50 13 50C15.96875 50 18.429688 47.835938 18.90625 45L28.15625 45C29.722656 45 31 43.722656 31 42.15625L31 15.90625C31 14.304688 29.738281 13 28.1875 13 Z M 33 20L33 45C33.480469 47.832031 36.03125 50 39 50C41.96875 50 44.429688 47.832031 44.90625 45L47 45C48.570313 45 50 43.570313 50 42L50 32.375C50 30.363281 48.550781 28.308594 48.375 28.0625L44.21875 22.5C43.265625 21.351563 41.769531 20 40 20 Z M 38 25L43.59375 25L46.78125 29.25C47.121094 29.730469 48 31.203125 48 32.375L48 33L38 33C37 33 36 32 36 31L36 27C36 25.894531 37 25 38 25 Z M 13 40C15.207031 40 17 41.792969 17 44C17 46.207031 15.207031 48 13 48C10.792969 48 9 46.207031 9 44C9 41.792969 10.792969 40 13 40 Z M 39 40C41.207031 40 43 41.792969 43 44C43 46.207031 41.207031 48 39 48C36.792969 48 35 46.207031 35 44C35 41.792969 36.792969 40 39 40Z">
+                        </path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap capitalize">Add Vehicle</span>
+                </a>
+            </li>
+            <li>
+                <a href="#"
+                    class="flex items-center p-3 text-slate-50 rounded-lg hover:bg-white hover:text-slate-950 group">
+                    <svg class="flex-shrink-0 size-7 text-slate-50 transition duration-75 group-hover:text-slate-950"
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path xmlns="http://www.w3.org/2000/svg"
+                            d="M13 3H7C5.89543 3 5 3.89543 5 5V10M13 3L19 9M13 3V8C13 8.55228 13.4477 9 14 9H19M19 9V19C19 20.1046 18.1046 21 17 21H10C7.79086 21 6 19.2091 6 17V17C6 14.7909 7.79086 13 10 13H13M13 13L10 10M13 13L10 16"
+                            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap capitalize">Update details</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
