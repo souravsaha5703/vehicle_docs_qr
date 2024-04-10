@@ -69,13 +69,23 @@ router.post("/otpverification",async (req,res)=>{
 
 router.get("/home",restrictedToLoggedInUserOnly,(req,res)=>{
     if(!req.user) return res.redirect("/")
-    const userObjectData={
+    let userObjectData={
         userName:req.user.name,
         userEmail:req.user.email,
         userPhone:req.user.ph
     }
     res.render("home",{userObjectData});
 });
+
+router.get("/add_vehicles",restrictedToLoggedInUserOnly,(req,res)=>{
+    if(!req.user) return res.redirect("/")
+    let userObjectData={
+        userName:req.user.name,
+        userEmail:req.user.email,
+        userPhone:req.user.ph
+    }
+    res.render("addVehicles",{userObjectData});
+})
 
 router.get("/error",(req,res)=>{
     let data={
