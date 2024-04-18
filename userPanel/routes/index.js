@@ -14,12 +14,6 @@ const mailerSend = new MailerSend({
 
 const sentFrom = new Sender("info@trial-jy7zpl93303l5vx6.mlsender.net", "Vehicle Docs 360");
 
-const mongouri = process.env.RTO_MONGO_URI;
-const dbName = "test";
-const collectionName = "rtodetails";
-
-const client = new MongoClient(mongouri, { useNewUrlParser: true, useUnifiedTopology: true });
-
 router.get("/", (req, res) => {
     res.render("login", { title: 'lol' });
 });
@@ -94,33 +88,18 @@ router.get("/add_vehicles",restrictedToLoggedInUserOnly,(req,res)=>{
     res.render("addVehicles",{userObjectData});
 });
 
-router.post("/verifydocs",async (req,res)=>{
-    await client.connect();
-
-    const rtodb = client.db(dbName);
-
-    const rtoDetails = rtodb.collection(collectionName);
-
-    try {
-        const query={owner_name:req.body.ownerName,mobile_no:req.body.ownerPhone,reg_no:req.body.vehicleNo,engine_no:req.body.engineNo,state_code:req.body.state,chassis_no:req.body.chasisNo,reg_upto:req.body.registrationUpto,tax_upto:req.body.taxpaidUpto,insurance_upto:req.body.insurancepaidUpto,pucc_upto:req.body.pollutionUpto};
-
-        const findData=rtoDetails.find(query);
-
-        if(findData){
-            return res.json({verified:true});
-        }else{
-            return res.json({verified:false});
-        }
-    } catch (error) {
-        console.log(error);
-    }
-});
-
 router.get("/error",(req,res)=>{
     let data={
         message:req.query.message
     }
     res.render("error",data);
+});
+
+router.get("/errorOccured",(req,res)=>{
+    let data={
+        message:req.query.message
+    }
+    res.render("errorPage",data);
 });
 
 module.exports = router;
