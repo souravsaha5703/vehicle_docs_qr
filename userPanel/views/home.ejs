@@ -4,14 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/output.css">
     <title>User Dashboard</title>
 </head>
 
 <body class="bg-gray-900">
     <%- include('sidebar') %>
-    <%- include('navbar') %>
-
+        <%- include('navbar') %>
+            <div class="w-full h-full flex items-center justify-center">
+                <div
+                    class="w-full mt-24 ml-48 flex items-start justify-start px-5 py-6 gap-2 overflow-hidden flex-col">
+                    <h1 class="text-left text-slate-50 text-3xl font-noto font-normal my-5 ml-3">Vehicles added by you</h1>
+                    <div class="w-full flex items-center justify-start flex-wrap gap-2">
+                        <% if(status==true) {%>
+                            <% vehicleData.forEach((data)=>{ %>
+                                <div class="border border-gray-700 p-3 rounded-lg transform transition duration-500 w-[400px]">
+                                    <div class="bg-gradient-to-tl from-slate-950 to-gray-900 shadow-2xl relative rounded-lg p-7 w-full">
+                                        <div class="absolute bottom-6 right-6 border border-blue-500 px-2 py-2 rounded-sm cursor-pointer">
+                                            <svg fill="#bae6fd" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4,4h6v6H4V4M20,4v6H14V4h6M14,15h2V13H14V11h2v2h2V11h2v2H18v2h2v3H18v2H16V18H13v2H11V16h3V15m2,0v3h2V15H16M4,20V14h6v6H4M6,6V8H8V6H6M16,6V8h2V6H16M6,16v2H8V16H6M4,11H6v2H4V11m5,0h4v4H11V13H9V11m2-5h2v4H11V6M2,2V6H0V2A2,2,0,0,1,2,0H6V2H2M22,0a2,2,0,0,1,2,2V6H22V2H18V0h4M2,18v4H6v2H2a2,2,0,0,1-2-2V18H2m20,4V18h2v4a2,2,0,0,1-2,2H18V22Z"></path> </g></svg>
+                                        </div>
+                                        <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Vehicle Reg no
+                                            : <%= data.vehicleNo %></h4>
+                                        <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Owner Name :
+                                            <%= data.ownerName %></h4>
+                                        <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Chassis Number
+                                            : <%= data.chasisNo %></h4>
+                                        <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">vehicle Reg
+                                            Upto : <%= data.reg_upto %></h4>
+                                        <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Tax paid Upto
+                                            : <%= data.taxPaidUpto %></h4>
+                                        <button
+                                            class="px-3 py-1 bg-transparent outline-none border border-blue-700 text-blue-100 font-noto rounded-sm mt-3 text-base font-light hover:bg-blue-700 hover:text-slate-50 transition-all ease-in-out duration-150 max-[990px]:text-base">All
+                                            Details</button>
+                                    </div>
+                                </div>
+                            <% }) %>
+                            <% } %>
+                        
+                        <!-- <div class="border border-gray-700 p-3 rounded-lg transform transition duration-500 w-[400px]">
+                            <div class="bg-gradient-to-tl from-slate-950 to-gray-900 shadow-2xl relative rounded-lg p-7 w-full">
+                                <div class="absolute bottom-6 right-6 border border-blue-500 px-2 py-2 rounded-sm cursor-pointer">
+                                    <svg fill="#bae6fd" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4,4h6v6H4V4M20,4v6H14V4h6M14,15h2V13H14V11h2v2h2V11h2v2H18v2h2v3H18v2H16V18H13v2H11V16h3V15m2,0v3h2V15H16M4,20V14h6v6H4M6,6V8H8V6H6M16,6V8h2V6H16M6,16v2H8V16H6M4,11H6v2H4V11m5,0h4v4H11V13H9V11m2-5h2v4H11V6M2,2V6H0V2A2,2,0,0,1,2,0H6V2H2M22,0a2,2,0,0,1,2,2V6H22V2H18V0h4M2,18v4H6v2H2a2,2,0,0,1-2-2V18H2m20,4V18h2v4a2,2,0,0,1-2,2H18V22Z"></path> </g></svg>
+                                </div>
+                                <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Vehicle Reg no
+                                    : 01</h4>
+                                <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Owner Name :
+                                    somdipta sen</h4>
+                                <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Chassis Number
+                                    : 4S3BMH68B3286050</h4>
+                                <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">vehicle Reg
+                                    Upto : 15/12/2026</h4>
+                                <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">Tax paid Upto
+                                    : 15/12/2024</h4>
+                                <button
+                                    class="px-3 py-1 bg-transparent outline-none border border-blue-700 text-blue-100 font-noto rounded-sm mt-3 text-base font-light hover:bg-blue-700 hover:text-slate-50 transition-all ease-in-out duration-150 max-[990px]:text-base">All
+                                    Details</button>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                </div>
+            </div>
 </body>
 
 </html>

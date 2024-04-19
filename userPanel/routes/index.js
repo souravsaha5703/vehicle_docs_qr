@@ -5,6 +5,7 @@ const {MongoClient}=require("mongodb");
 const router = express.Router();
 const otpModel = require("../models/otpmodel");
 const userModel=require("../models/usermodel");
+const vehicleModel=require("../models/vehicleModel");
 const {setUser}=require("../service/authtoken");
 const {restrictedToLoggedInUserOnly}=require("../middlewares/auth");
 
@@ -68,14 +69,22 @@ router.post("/otpverification",async (req,res)=>{
     }
 });
 
-router.get("/home",restrictedToLoggedInUserOnly,(req,res)=>{
+router.get("/home",restrictedToLoggedInUserOnly,async (req,res)=>{
     if(!req.user) return res.redirect("/")
     let userObjectData={
         userName:req.user.name,
         userEmail:req.user.email,
         userPhone:req.user.ph
     }
-    res.render("home",{userObjectData});
+    let status;
+    const allVehicle=await vehicleModel.find({userId:req.user._id});
+    if(allVehicle){
+        status=true
+        res.render("home",{userObjectData,status:status,vehicleData:allVehicle});
+    }else{
+        status=false
+        res.render("home",{userObjectData,status:status,vehicleData:"No vehicle added"});
+    }
 });
 
 router.get("/add_vehicles",restrictedToLoggedInUserOnly,(req,res)=>{
