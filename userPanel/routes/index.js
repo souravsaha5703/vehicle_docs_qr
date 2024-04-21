@@ -97,6 +97,16 @@ router.get("/add_vehicles",restrictedToLoggedInUserOnly,(req,res)=>{
     res.render("addVehicles",{userObjectData});
 });
 
+router.get("/update_vehicles",restrictedToLoggedInUserOnly,(req,res)=>{
+    if(!req.user) return res.redirect("/")
+    let userObjectData={
+        userName:req.user.name,
+        userEmail:req.user.email,
+        userPhone:req.user.ph
+    }
+    res.render("updateVehicle",{userObjectData});
+});
+
 router.get("/error",(req,res)=>{
     let data={
         message:req.query.message
