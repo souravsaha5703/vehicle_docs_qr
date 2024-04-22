@@ -74,10 +74,24 @@ router.post("/verifydocs",restrictedToLoggedInUserOnly,async (req,res)=>{
 });
 
 router.get("/vehicleData/:id",async (req,res)=>{
-    const {id}=req.params;
+    let {id}=req.params;
     const vehicle=await vehicleModel.findById(id);
-    // console.log(vehicle);
     res.json(vehicle);
 });
+
+router.post("/updateVehicle/:id",async (req,res)=>{
+    let VehicleId=req.params.id;
+    const {pollutionUpto,registrationUpto,taxpaidUpto,insurancepaidUpto}=req.body;
+    try{
+        const updatedVehicle=await vehicleModel.findByIdAndUpdate(VehicleId,{reg_upto:registrationUpto,taxPaidUpto:taxpaidUpto,insurancePaidUpto:insurancepaidUpto,pucValidUpto:pollutionUpto},{new:true});
+
+        if(updatedVehicle){
+            res.redirect("/home");
+        }
+    }catch(error){
+        console.error(error);
+    }
+    
+})
 
 module.exports=router
