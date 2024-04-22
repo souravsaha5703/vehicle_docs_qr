@@ -73,4 +73,11 @@ router.post("/verifydocs",restrictedToLoggedInUserOnly,async (req,res)=>{
     }
 });
 
+router.get("/vehicleData/:id",async (req,res)=>{
+    const {id}=req.params;
+    const vehicle=await vehicleModel.findById(id);
+    // console.log(vehicle);
+    res.json(vehicle);
+});
+
 module.exports=router
