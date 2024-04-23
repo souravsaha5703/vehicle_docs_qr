@@ -31,11 +31,12 @@ router.post("/verifydocs",restrictedToLoggedInUserOnly,async (req,res)=>{
         registrationUpto:req.body.registrationUpto,
         taxpaidUpto:req.body.taxpaidUpto,
         insurancepaidUpto:req.body.insurancepaidUpto,
-        pollutionUpto:req.body.pollutionUpto
+        pollutionUpto:req.body.pollutionUpto,
+        fitUpto:req.body.fitUpto
     }
 
     try {
-        const query={owner_name:vehicleFormData.ownerName,mobile_no:vehicleFormData.ownerPhone,reg_no:vehicleFormData.vehicleNo,engine_no:vehicleFormData.engineNo,state_code:vehicleFormData.state,chassis_no:vehicleFormData.chasisNo,reg_upto:vehicleFormData.registrationUpto,tax_upto:vehicleFormData.taxpaidUpto,insurance_upto:vehicleFormData.insurancepaidUpto,pucc_upto:vehicleFormData.pollutionUpto};
+        const query={owner_name:vehicleFormData.ownerName,mobile_no:vehicleFormData.ownerPhone,reg_no:vehicleFormData.vehicleNo,engine_no:vehicleFormData.engineNo,state_code:vehicleFormData.state,chassis_no:vehicleFormData.chasisNo,reg_upto:vehicleFormData.registrationUpto,tax_upto:vehicleFormData.taxpaidUpto,insurance_upto:vehicleFormData.insurancepaidUpto,pucc_upto:vehicleFormData.pollutionUpto,fit_upto:vehicleFormData.fitUpto};
 
         const findData=rtoDetails.find(query);
 
@@ -59,7 +60,8 @@ router.post("/verifydocs",restrictedToLoggedInUserOnly,async (req,res)=>{
                     reg_upto:vehicleFormData.registrationUpto,
                     taxPaidUpto:vehicleFormData.taxpaidUpto,
                     insurancePaidUpto:vehicleFormData.insurancepaidUpto,
-                    pucValidUpto:vehicleFormData.pollutionUpto
+                    pucValidUpto:vehicleFormData.pollutionUpto,
+                    fit_upto:vehicleFormData.fitUpto
                 });
     
                 res.redirect("/home");
@@ -81,9 +83,9 @@ router.get("/vehicleData/:id",async (req,res)=>{
 
 router.post("/updateVehicle/:id",async (req,res)=>{
     let VehicleId=req.params.id;
-    const {pollutionUpto,registrationUpto,taxpaidUpto,insurancepaidUpto}=req.body;
+    const {pollutionUpto,registrationUpto,taxpaidUpto,insurancepaidUpto,fitUpto}=req.body;
     try{
-        const updatedVehicle=await vehicleModel.findByIdAndUpdate(VehicleId,{reg_upto:registrationUpto,taxPaidUpto:taxpaidUpto,insurancePaidUpto:insurancepaidUpto,pucValidUpto:pollutionUpto},{new:true});
+        const updatedVehicle=await vehicleModel.findByIdAndUpdate(VehicleId,{reg_upto:registrationUpto,taxPaidUpto:taxpaidUpto,insurancePaidUpto:insurancepaidUpto,pucValidUpto:pollutionUpto,fit_upto:fitUpto},{new:true});
 
         if(updatedVehicle){
             res.redirect("/home");

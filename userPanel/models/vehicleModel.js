@@ -59,6 +59,10 @@ const vehicleSchema=new mongoose.Schema({
     pucValidUpto:{
         type:Date,
         required:true
+    },
+    fit_upto:{
+        type:Date,
+        required:true
     }
 });
 
