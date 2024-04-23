@@ -12,7 +12,7 @@
 <body class="bg-gray-900">
     <%- include('sidebar') %>
         <%- include('navbar') %>
-            <div class="w-full h-full flex items-center justify-center">
+            <div class="w-full h-full flex items-center justify-center relative">
                 <div class="w-full mt-24 ml-48 flex items-start justify-start px-5 py-6 gap-2 overflow-hidden flex-col">
                     <h1 class="text-left text-slate-50 text-3xl font-noto font-normal my-5 ml-3">Vehicles added by you
                     </h1>
@@ -60,7 +60,8 @@
                                                         data.taxPaidUpto.getFullYear() %>
                                         </h4>
                                         <button
-                                            class="px-3 py-1 bg-transparent outline-none border border-blue-700 text-blue-100 font-noto rounded-sm mt-3 text-base font-light hover:bg-blue-700 hover:text-slate-50 transition-all ease-in-out duration-150 max-[990px]:text-base">All
+                                            class="px-3 py-1 bg-transparent outline-none border border-blue-700 text-blue-100 font-noto rounded-sm mt-3 text-base font-light hover:bg-blue-700 hover:text-slate-50 transition-all ease-in-out duration-150 max-[990px]:text-base detailsBtn"
+                                            data-modal-toggle="detailsModal" id="<%= data._id  %>">All
                                             Details</button>
                                     </div>
                                 </div>
@@ -72,7 +73,51 @@
                     </div>
 
                 </div>
+
+                <div id="detailsModal"
+                    class="hidden fixed inset-0 bg-gray-500 bg-opacity-50 overflow-y-auto h-screen w-screen px-4 md:px-8">
+                    <div
+                        class="relative z-40 rounded-lg shadow-lg mx-auto w-full md:w-1/2 mt-24 transition-all duration-150 ease-in-out">
+                        <div class="modal-content bg-slate-950 p-7 rounded-md">
+                            <h4
+                                class="text-xl font-medium mb-4 text-white font-noto text-left border-b border-slate-500 pb-2">
+                                Your Vehicles Details</h4>
+                            <div class="flex flex-col items-start">
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Owner Name :
+                                    <span id="ownerName"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Owner Phone
+                                    Number : <span id="ownerPhone"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle
+                                    Registered Number : <span id="vehicleNo"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle Engine
+                                    Number : <span id="engineNo"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Brand : <span
+                                        id="brand"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle
+                                    Registered State : <span id="reg_state"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Chasis Number
+                                    : <span id="chasisNo"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle
+                                    Registered upto : <span id="reg_upto"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Tax Paid upto
+                                    : <span id="taxPaidUpto"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Insurance Paid
+                                    upto : <span id="insurancePaidUpto"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Pollution
+                                    Certificate Valid upto : <span id="pucValidUpto"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle Fit
+                                    upto : <span id="fit_upto"></span></h5>
+                            </div>
+                            <div class="flex justify-end items-center space-x-4">
+                                <button data-modal-toggle="detailsModal" id="closeModal" type="button"
+                                    class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-sm font-medium text-base font-noto text-white">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <script src="../javascripts/home.js"></script>
 </body>
 
 </html>
