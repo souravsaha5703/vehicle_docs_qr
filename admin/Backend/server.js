@@ -6,6 +6,8 @@ const bodyParser=require('body-parser');
 const session=require('express-session');
 const cookieParser=require('cookie-parser');
 const router=require("./routes/index");
+const usersRouter=require("./routes/users");
+const vehiclesRouter=require("./routes/vehicles");
 
 const app=express();
 const PORT=process.env.PORT
@@ -37,14 +39,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/",router);
-
-app.get('/api/users',function(req,res){
-    let sql="SELECT * FROM users";
-    db.query(sql,(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data);
-    });
-});
+app.use("/",usersRouter);
+app.use("/",vehiclesRouter);
 
 app.get("/adminlogout",function(req,res){
     req.session.destroy(err=>{
