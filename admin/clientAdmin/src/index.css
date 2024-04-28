@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../public/fonts/Poppins/Poppins-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Oswald";
+    src: url("../public/fonts/Oswald/Oswald-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: "Noto Sans";
+    src: url("../public/fonts/Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf");
+}
