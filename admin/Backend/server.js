@@ -38,32 +38,11 @@ app.use(bodyParser.json());
 
 app.use("/",router);
 
-// app.get('/',function (req,res){
-//     if(req.session.username){
-//         return res.json({valid:true,username:req.session.username})
-//     }else{
-//         return res.json({valid:false})
-//     }
-// });
-
 app.get('/api/users',function(req,res){
     let sql="SELECT * FROM users";
     db.query(sql,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data);
-    });
-});
-
-app.post("/api/adminlogin",function(req,res){
-    let sql="SELECT * FROM admin WHERE username = ? AND password = ?";
-    db.query(sql,[req.body.username,req.body.password],(err,result)=>{
-        if(err) return res.json({Message:"Error in Server"});
-        if(result.length>0){
-            req.session.username=result[0].username;
-            return res.json({Login:true});
-        }else{
-            return res.json({Login:false});
-        }
     });
 });
 

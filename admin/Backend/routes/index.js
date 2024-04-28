@@ -1,9 +1,9 @@
-const express=require('express');
-const adminSchema=require("../models/adminModel");
-const adminotpSchema=require("../models/adminotpModel");
-const bcrypt=require('bcrypt');
+const express = require('express');
+const adminSchema = require("../models/adminModel");
+const adminotpSchema = require("../models/adminotpModel");
+const bcrypt = require('bcrypt');
 const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
-const router=express.Router();
+const router = express.Router();
 
 const mailerSend = new MailerSend({
     apiKey: process.env.MAILERSEND_API_KEY,
@@ -11,36 +11,62 @@ const mailerSend = new MailerSend({
 
 const sentFrom = new Sender("info@trial-jy7zpl93303l5vx6.mlsender.net", "Vehicle Docs 360");
 
-router.get('/',(req,res)=>{
-    console.log("hello from index");
+router.get('/', (req, res) => {
+    if (req.session.username) {
+        return res.json({ valid: true, username: req.session.username })
+    } else {
+        return res.json({ valid: false })
+    }
 });
 
-router.post("/api/createAdmin",async (req,res)=>{
-    const {name,email,username,password}=req.body;
-    const saltRounds=10;
-    const hashPassword=await bcrypt.hash(password,saltRounds);
-    
-    try{
-        const createAdmin=adminSchema.create({
-            adminName:name,
-            adminEmail:email,
-            username:username,
-            password:hashPassword
-        });
-        res.status(200).json({created:true});
+router.post("/api/createAdmin", async (req, res) => {
+    const { name, email, username, password } = req.body;
+    const saltRounds = 10;
+    const hashPassword = await bcrypt.hash(password, saltRounds);
 
-    }catch(error){
+    try {
+        const createAdmin = adminSchema.create({
+            adminName: name,
+            adminEmail: email,
+            username: username,
+            password: hashPassword
+        });
+        res.status(200).json({ created: true });
+
+    } catch (error) {
         console.error(error);
     }
 
 });
 
-router.post("/sendotp",async (req,res)=>{
-    let {userEmail}=req.body;
+router.post("/api/adminLogin", async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const adminExist = await adminSchema.findOne({ username: username });
+        if (adminExist) {
+            bcrypt.compare(password, adminExist.password)
+                .then((result) => {
+                    if (result) {
+                        res.json({ passMatch: true, adminFound: true, email: adminExist.adminEmail });
+                    } else {
+                        res.json({ passMatch: false, adminFound: true });
+                    }
+                })
+        } else {
+            res.json({ passMatch: false, adminFound: false });
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.post("/sendotp", async (req, res) => {
+    let { userEmail } = req.body;
     console.log(userEmail);
 
     const otp = Math.floor(100000 + Math.random() * 900000);
-    try{
+    try {
         const recipients = [new Recipient(userEmail, "Recipient")];
 
         const emailParams = new EmailParams()
@@ -51,36 +77,55 @@ router.post("/sendotp",async (req,res)=>{
             .setHtml(`<strong>The otp for Administrator login is ${otp}</strong>`)
             .setText("This is the text content otp")
         await mailerSend.email.send(emailParams);
-    
+
         await adminotpSchema.create({
-            AdminEmail:userEmail,
-            otp:otp
+            AdminEmail: userEmail,
+            otp: otp
         });
-    
-        res.status(200).json({sent:true});
-    }catch(error){
+
+        res.status(200).json({ sent: true });
+    } catch (error) {
         console.error(error);
     }
 });
 
-router.post("/otpverification",async (req,res)=>{
-    let {otp,adminEmail}=req.body;
-    try{
-        const compareotp=await adminotpSchema.findOne({AdminEmail:adminEmail,otp:otp});
-        if(compareotp){
+router.post("/otpverification", async (req, res) => {
+    let { otp, adminEmail } = req.body;
+    console.log(otp, adminEmail);
+    try {
+        const compareotp = await adminotpSchema.findOne({ AdminEmail: adminEmail, otp: otp });
+        if (compareotp) {
             console.log("admin verified");
-            const updatedAdmin=await adminSchema.findOneAndUpdate({adminEmail:adminEmail},{valid:true},{new:true});
+            const updatedAdmin = await adminSchema.findOneAndUpdate({ adminEmail: adminEmail }, { valid: true }, { new: true });
 
-            if(updatedAdmin){
-                res.status(200).json({verified:true});
-            }else{
-                res.json({verified:false});
+            if (updatedAdmin) {
+                res.status(200).json({ verified: true });
+            } else {
+                res.json({ verified: false });
             }
         }
-    }catch(error){
+    } catch (error) {
         console.error(error);
     }
-    
+
 });
 
-module.exports=router;
+router.post("/loginotpverification", async (req, res) => {
+    let { otp, adminEmail } = req.body;
+    console.log(otp, adminEmail);
+    try {
+        const compareloginotp = await adminotpSchema.findOne({ AdminEmail: adminEmail, otp: otp });
+        if (compareloginotp) {
+            console.log("Admin Verified");
+            const currentAdmin = await adminSchema.findOne({ adminEmail: adminEmail });
+            req.session.username = currentAdmin.username;
+            res.status(200).json({ verified: true });
+        } else {
+            res.json({ verified: false });
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+module.exports = router;
