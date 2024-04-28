@@ -4,7 +4,7 @@ import Tablerow from '../Table/Tablerow';
 function Users() {
   const [userData, setUserData] = useState([]);
   const id = useId();
-  const url = "http://localhost:8000/api/users";
+  const url = "http://localhost:8000/api/allUsers";
 
   useEffect(() => {
     async function usersData() {
@@ -25,20 +25,20 @@ function Users() {
       <table className="table-auto w-full bg-indigo-500 rounded-md border border-white">
         <thead className='border border-white'>
           <tr>
-            <th className='border border-white px-4 text-center text-2xl text-slate-100 font-noto font-medium py-3'>ID</th>
             <th className='border border-white px-4 text-center text-2xl text-slate-100 font-noto font-medium py-3'>Full Name</th>
             <th className='border border-white px-4 text-center text-2xl text-slate-100 font-noto font-medium py-3'>Email</th>
             <th className='border border-white px-4 text-center text-2xl text-slate-100 font-noto font-medium py-3'>Phone No</th>
+            <th className='border border-white px-4 text-center text-2xl text-slate-100 font-noto font-medium py-3'>Valid User</th>
           </tr>
         </thead>
         <tbody className='border border-white'>
           {userData && userData.map((data, index) => (
             <Tablerow
               key={id}
-              id={data.id}
               name={data.fullname}
               email={data.email}
-              phone={data.phone}
+              phone={data.phoneno}
+              valid={data.validUser.toString()}
             />))}
         </tbody>
       </table>
