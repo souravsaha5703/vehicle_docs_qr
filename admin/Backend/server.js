@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express=require('express');
-const mysql=require('mysql');
 const cors=require('cors');
 const bodyParser=require('body-parser');
 const session=require('express-session');
@@ -11,13 +10,6 @@ const vehiclesRouter=require("./routes/vehicles");
 
 const app=express();
 const PORT=process.env.PORT
-
-const db=mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"",
-    database:"rtodb"
-});
 
 app.use(cors({
     origin:["http://localhost:5173"],

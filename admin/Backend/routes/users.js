@@ -19,4 +19,22 @@ router.get('/api/allUsers',async (req,res)=>{
     }
 });
 
+router.get('/api/countUsers',async (req,res)=>{
+    try {
+        await client.connect();
+        const db=client.db('test');
+        const collection=db.collection('users');
+
+        await collection.countDocuments({},(err,count)=>{
+            if(err){
+                console.error('Error in counting users : ',err);
+            }else{
+                res.status.json({usersCount:count});
+            }
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 module.exports=router;
