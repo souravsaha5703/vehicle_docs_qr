@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [username, setUsername] = useState('');
+  const [userCount,setUserCount]=useState('');
+  const [vehicleCount,setVehicleCount]=useState('');
   const navigate = useNavigate();
 
   axios.defaults.withCredentials = true;
@@ -22,7 +24,30 @@ function Home() {
         }
       })
       .catch(err => console.log(err))
-  }, [])
+  }, []);
+
+  useEffect(()=>{
+    axios.get('http://localhost:8000/api/countUsers')
+    .then(res=>{
+      if(res.data.usersCount){
+        console.log(res.data.usersCount);
+        setUserCount(res.data.usersCount);
+      }else{
+        setUserCount(0);
+      }
+    })
+  },[userCount]);
+
+  useEffect(()=>{
+    axios.get('http://localhost:8000/api/countVehicles')
+    .then(res=>{
+      if(res.data.vehiclesCount){
+        setVehicleCount(res.data.vehiclesCount);
+      }else{
+        setVehicleCount(0);
+      }
+    })
+  },[vehicleCount]);
 
   const handleLogout=(e)=>{
     e.preventDefault();
@@ -55,11 +80,11 @@ function Home() {
           </div>
           <div className='w-56 h-32 bg-indigo-400 rounded-xl flex flex-col items-center justify-center gap-4 shadow-lg'>
             <CgProfile className='text-4xl text-slate-950 text-center' />
-            <h2 className='text-2xl font-noto font-semibold text-slate-950 text-center'>Users</h2>
+            <h2 className='text-2xl font-noto font-semibold text-slate-950 text-center'>{userCount} Users</h2>
           </div>
           <div className='w-56 h-32 bg-indigo-400 rounded-xl flex flex-col items-center justify-center gap-4 shadow-lg'>
             <PiCarProfile className='text-4xl text-slate-950 text-center' />
-            <h2 className='text-2xl font-noto font-semibold text-slate-950 text-center'>Vehicles</h2>
+            <h2 className='text-2xl font-noto font-semibold text-slate-950 text-center'> {vehicleCount} Vehicles</h2>
           </div>
         </div>
       </div>
