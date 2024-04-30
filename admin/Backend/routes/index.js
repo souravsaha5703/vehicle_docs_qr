@@ -48,7 +48,7 @@ router.post("/api/adminLogin", async (req, res) => {
             bcrypt.compare(password, adminExist.password)
                 .then((result) => {
                     if (result) {
-                        res.json({ passMatch: true, adminFound: true, email: adminExist.adminEmail });
+                        res.json({ passMatch: true, adminFound: true, email: adminExist.adminEmail, name:adminExist.adminName });
                     } else {
                         res.json({ passMatch: false, adminFound: true });
                     }
@@ -62,20 +62,30 @@ router.post("/api/adminLogin", async (req, res) => {
 });
 
 router.post("/sendotp", async (req, res) => {
-    let { userEmail } = req.body;
+    let { userEmail,name } = req.body;
     console.log(userEmail);
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     try {
         const recipients = [new Recipient(userEmail, "Recipient")];
 
+        const personalization = [
+            {
+              email: userEmail,
+              data: {
+                otp: otp,
+                name: name
+              },
+            }
+          ];
+
         const emailParams = new EmailParams()
             .setFrom(sentFrom)
             .setTo(recipients)
             .setReplyTo(sentFrom)
             .setSubject("OTP Verification Email for Administrator")
-            .setHtml(`<strong>The otp for Administrator login is ${otp}</strong>`)
-            .setText("This is the text content otp")
+            .setTemplateId('z3m5jgrd1no4dpyo')
+            .setPersonalization(personalization);
         await mailerSend.email.send(emailParams);
 
         await adminotpSchema.create({

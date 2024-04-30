@@ -25,13 +25,9 @@ router.get('/api/countUsers',async (req,res)=>{
         const db=client.db('test');
         const collection=db.collection('users');
 
-        await collection.countDocuments({},(err,count)=>{
-            if(err){
-                console.error('Error in counting users : ',err);
-            }else{
-                res.status.json({usersCount:count});
-            }
-        });
+        const usersCount=await collection.countDocuments();
+
+        // res.status(200).json({count:usersCount});
     } catch (error) {
         console.error(error);
     }
