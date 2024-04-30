@@ -37,7 +37,7 @@ function Signup() {
         })
         .then(res=>{
             if(res.data.created){
-                const sendData={data:email}
+                const sendData={data:email,name:name}
                 navigate('/verifyotp',{state:sendData});
             }else{
                 alert("Error in creating the admin");

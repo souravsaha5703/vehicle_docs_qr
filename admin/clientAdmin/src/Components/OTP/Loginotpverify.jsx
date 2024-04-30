@@ -5,6 +5,7 @@ import axios from 'axios';
 function Loginotpverify() {
     const [otp,setOtp]=useState('');
     const [otpMessage,setOtpMessage]=useState('');
+    const [otpError,setOtpError]=useState('');
 
     const location=useLocation();
     const receivedData=location.state;
@@ -13,7 +14,8 @@ function Loginotpverify() {
 
     useEffect(()=>{
         axios.post('http://localhost:8000/sendotp',{
-            userEmail:receivedData.data
+            userEmail:receivedData.data,
+            name:receivedData.name
         })
         .then(res=>{
           if(res.data.sent){
@@ -35,8 +37,7 @@ function Loginotpverify() {
             if(res.data.verified){
                 navigate('/dashboard');
             }else{
-                alert("admin not verified");
-                navigate('/');
+                setOtpError('OTP does not matched');
             }
         })
         .catch(err=>console.log(err.response.data));
@@ -54,6 +55,7 @@ function Loginotpverify() {
                 <input type="text" placeholder="Enter otp" maxLength={6} value={otp}
                     onChange={(e)=> setOtp(e.target.value)}
                     className="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
+                    <h5 className='text-red-600 font-noto text-lg text-left'>{otpError}</h5>
                 <button onClick={submitOtp} className="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">
                     Verify otp
                 </button>

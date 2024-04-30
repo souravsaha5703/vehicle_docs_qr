@@ -14,7 +14,8 @@ function Otp() {
 
     useEffect(()=>{
         axios.post('http://localhost:8000/sendotp',{
-            userEmail:receivedData.data
+            userEmail:receivedData.data,
+            name:receivedData.name
         })
         .then(res=>{
           if(res.data.sent){

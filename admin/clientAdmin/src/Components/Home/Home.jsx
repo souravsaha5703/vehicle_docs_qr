@@ -8,9 +8,11 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [username, setUsername] = useState('');
-  const [userCount,setUserCount]=useState('');
-  const [vehicleCount,setVehicleCount]=useState('');
+  const [userCount, setUserCount] = useState('');
+  const [vehicleCount, setVehicleCount] = useState('');
   const navigate = useNavigate();
+
+  const userCounturi = 'http://localhost:8000/api/countUsers';
 
   axios.defaults.withCredentials = true;
 
@@ -19,6 +21,18 @@ function Home() {
       .then(res => {
         if (res.data.valid) {
           setUsername(res.data.username);
+          // async function usersCount() {
+          //   try {
+          //     const response = await fetch(userCounturi);
+          //     const resData = await response.json();
+          //     console.log("hhe");
+          //     setUserCount(resData);
+          //   }
+          //   catch (error) {
+          //     console.log(error);
+          //   }
+          // }
+          // usersCount();
         } else {
           navigate('/');
         }
@@ -26,45 +40,45 @@ function Home() {
       .catch(err => console.log(err))
   }, []);
 
-  useEffect(()=>{
-    axios.get('http://localhost:8000/api/countUsers')
-    .then(res=>{
-      if(res.data.usersCount){
-        console.log(res.data.usersCount);
-        setUserCount(res.data.usersCount);
-      }else{
-        setUserCount(0);
-      }
-    })
-  },[userCount]);
+  // useEffect(()=>{
+  //   axios.get('http://localhost:8000/api/countUsers')
+  //   .then(res=>{
+  //     if(res.data.usersCount){
+  //       console.log(res.data.usersCount);
+  //       setUserCount(res.data.usersCount);
+  //     }else{
+  //       setUserCount(0);
+  //     }
+  //   })
+  // },[userCount]);
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('http://localhost:8000/api/countVehicles')
-    .then(res=>{
-      if(res.data.vehiclesCount){
-        setVehicleCount(res.data.vehiclesCount);
-      }else{
-        setVehicleCount(0);
-      }
-    })
-  },[vehicleCount]);
+      .then(res => {
+        if (res.data.vehiclesCount) {
+          setVehicleCount(res.data.vehiclesCount);
+        } else {
+          setVehicleCount(0);
+        }
+      })
+  }, [vehicleCount]);
 
-  const handleLogout=(e)=>{
+  const handleLogout = (e) => {
     e.preventDefault();
-        axios.get("http://localhost:8000/adminlogout")
-        .then(res=>{
-            if(res.data.logout){
-                navigate('/');
-            }
-        })
-        .catch(err=>console.log(err.response.data));
+    axios.get("http://localhost:8000/adminlogout")
+      .then(res => {
+        if (res.data.logout) {
+          navigate('/');
+        }
+      })
+      .catch(err => console.log(err.response.data));
   }
 
   return (
     <div className='w-full flex items-center justify-center'>
       <div className='w-full h-screen flex flex-col relative'>
         <button className="hover:bg-red-500 text-red-500 font-bold py-2 px-4 border border-red-500 rounded absolute top-4 right-4 z-10 hover:text-white font-noto"
-        onClick={handleLogout}>
+          onClick={handleLogout}>
           Logout
         </button>
         <h2 className='mt-10 ml-10 text-3xl font-poppins font-semibold text-indigo-600 underline text-left'>Dashboard</h2>

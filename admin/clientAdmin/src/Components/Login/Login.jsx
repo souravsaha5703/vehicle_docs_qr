@@ -7,6 +7,7 @@ import axios from 'axios';
 function Login() {
     const [username,setUsername]=useState('');
     const [password,setPassword]=useState('');
+    const [loginError,setLoginError]=useState('');
 
     const navigate=useNavigate();
 
@@ -33,14 +34,13 @@ function Login() {
         .then(res=>{
             if(res.data.adminFound){
                 if(res.data.passMatch){
-                  const sendEmailData={data:res.data.email}
-                  console.log(sendEmailData);
+                  const sendEmailData={data:res.data.email,name:res.data.name}
                   navigate('/loginotpverify',{state:sendEmailData});
                 }else{
-                  console.log("pass does not matched");
+                  setLoginError('Password does not match');
                 }
             }else{
-                alert("Admin Not found");
+              setLoginError('Username does not match');
             }
         })
         .catch(err=>console.log(err.response.data));
@@ -71,7 +71,8 @@ function Login() {
                         value={password}
                         onChange={(e)=>setPassword(e.target.value)}
                         />
-                        <button className='px-5 py-2 border-2 border-slate-950 text-xl font-noto mt-5 text-center rounded-md font-medium text-slate-950 duration-150 ease-in-out hover:text-white hover:bg-slate-950 flex items-center justify-center' type='submit' >Sign In <FaArrowRight className='text-lg ml-2 mt-1' /></button>
+                        <h5 className='text-red-600 font-noto text-lg text-left'>{loginError}</h5>
+                        <button className='px-5 py-2 border-2 border-slate-950 text-xl font-noto mt-2 text-center rounded-md font-medium text-slate-950 duration-150 ease-in-out hover:text-white hover:bg-slate-950 flex items-center justify-center' type='submit' >Sign In <FaArrowRight className='text-lg ml-2 mt-1' /></button>
                     </form>
                 </div>
             </div>
