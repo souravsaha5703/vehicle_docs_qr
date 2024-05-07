@@ -5,6 +5,7 @@ const cookieParser=require("cookie-parser");
 const router=require("./routes/index");
 const userRouter=require("./routes/users");
 const vehicleRouter=require("./routes/vehicles");
+const adminRouter=require("./routes/admin");
 
 const app=express();
 
@@ -24,6 +25,7 @@ app.use(session({
 app.use("/",router);
 app.use("/",userRouter);
 app.use("/",vehicleRouter);
+app.use("/",adminRouter);
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));

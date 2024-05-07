@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require("express");
 const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
-const {MongoClient}=require("mongodb");
 const router = express.Router();
 const otpModel = require("../models/otpmodel");
 const userModel=require("../models/usermodel");
@@ -16,7 +15,7 @@ const mailerSend = new MailerSend({
 const sentFrom = new Sender("info@trial-jy7zpl93303l5vx6.mlsender.net", "Vehicle Docs 360");
 
 router.get("/", (req, res) => {
-    res.render("login", { title: 'lol' });
+    res.render("login", { title: 'login' });
 });
 
 router.get("/signup", (req, res) => {
@@ -24,44 +23,59 @@ router.get("/signup", (req, res) => {
 });
 
 router.get("/verifyotp", async (req, res) => {
-    let data = req.session.userEmail;
+    let data = req.session.adminEmail;
     console.log(data);
 
     const otp = Math.floor(100000 + Math.random() * 900000);
+    try {
+        const recipients = [new Recipient(data, "Recipient")];
 
-    const recipients = [new Recipient(data, "Recipient")];
+        const personalization = [
+            {
+              email: data,
+              data: {
+                otp: otp,
+                name: "Admin"
+              },
+            }
+          ];
 
-    const emailParams = new EmailParams()
-        .setFrom(sentFrom)
-        .setTo(recipients)
-        .setReplyTo(sentFrom)
-        .setSubject("OTP verification email")
-        .setHtml(`<strong>The otp for email verification is ${otp}</strong>`)
-        .setText("This is the text content otp")
-    await mailerSend.email.send(emailParams);
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setReplyTo(sentFrom)
+            .setSubject("OTP Verification Email for Administrator Login")
+            .setTemplateId('z3m5jgrd1no4dpyo')
+            .setPersonalization(personalization);
+        await mailerSend.email.send(emailParams);
 
-    const newOtp = await otpModel.create({
-        userEmail: data,
-        otp: otp
-    });
+        await otpModel.create({
+            AdminEmail: data,
+            otp: otp
+        });
+
+        res.render("verifyotp", { title: "Verify otp" });
+    } catch (error) {
+        console.error(error);
+    }
     res.render("verifyotp", { title: "hehe" });
 });
 
 router.post("/otpverification",async (req,res)=>{
     const otpData=req.body.otp;
-    const sessionEmail=req.session.userEmail;
+    const sessionEmail=req.session.adminEmail;
     try{
-        const user=await otpModel.findOne({userEmail:sessionEmail,otp:otpData});
+        const user=await otpModel.findOne({AdminEmail:sessionEmail,otp:otpData});
         if(user){
-            console.log("User Verified");
-            const updateStatus=await userModel.findOneAndUpdate({_id:req.session.useridentity},{validUser:true},{new:true});
-            const selectUser=await userModel.findOne({_id:req.session.useridentity});
+            console.log("Admin Verified");
+            let adminId=req.session.adminid;
             
-            const token=setUser(selectUser);
+            const token=setUser(adminId);
             res.cookie("uid",token);
-            res.redirect("/home");
+            // res.redirect("/home");
+            res.send("verified");
         }else{
-            console.log("User not exists");
+            res.redirect("/error?message="+"OTP unverified");
         }
     }catch(error){
         console.error(error);

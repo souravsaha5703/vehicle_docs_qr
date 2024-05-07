@@ -1,17 +1,16 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
-const express = require("express");
 
 const connection = mongoose.connect(process.env.MONGODB_CONNECTION);
 
 connection.then(() => {
-    console.log("Database successfully connected");
+    console.log("Admin otp Model successfully connected");
 }).catch((err) => {
     console.log(`Error occured ${err}`);
 });
 
 const otpSchema = new mongoose.Schema({
-    userEmail: {
+    AdminEmail: {
         type: String,
         required: true
     },
