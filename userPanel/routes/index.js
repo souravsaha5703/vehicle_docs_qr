@@ -68,9 +68,10 @@ router.post("/otpverification",async (req,res)=>{
         const user=await otpModel.findOne({AdminEmail:sessionEmail,otp:otpData});
         if(user){
             console.log("Admin Verified");
-            let adminId=req.session.adminid;
+            // let adminId=req.session.adminid;
+            const activeAdmin=await adminModel.findOne({_id:req.session.adminid});
             
-            const token=setUser(adminId);
+            const token=setUser(activeAdmin);
             res.cookie("uid",token);
             res.redirect("/dashboard");
         }else{
@@ -84,58 +85,39 @@ router.post("/otpverification",async (req,res)=>{
 
 router.get("/dashboard",restrictedToLoggedInUserOnly,async (req,res)=>{
     if(!req.user) return res.redirect("/")
-    try {
-        await adminModel.findById(req.session.adminid)
-        .then(admin=>{
-            if(admin){
-                res.render("dashboard",{admin});
-            }else{
-                console.log("No document found with that ID");
-            }
-        })
-        .catch(error => {
-            console.error("Error finding document:", error);
-        });
-    } catch (error) {
-        console.error(`Error occured ${error}`);
-    }
+    let admin={
+        username:req.user.username,
+        email:req.user.email
+    };
+
+    res.render("dashboard",{admin});
 });
 
-router.get("/home",restrictedToLoggedInUserOnly,async (req,res)=>{
+router.get("/allVehicles",restrictedToLoggedInUserOnly,async (req,res)=>{
     if(!req.user) return res.redirect("/")
-    let userObjectData={
-        userName:req.user.name,
-        userEmail:req.user.email,
-        userPhone:req.user.ph
-    }
+    let admin={
+        username:req.user.username,
+        email:req.user.email
+    };
     let status;
-    const allVehicle=await vehicleModel.find({userId:req.user._id});
+    const allVehicle=await vehicleModel.find({});
     if(allVehicle){
         status=true
-        res.render("home",{userObjectData,status:status,vehicleData:allVehicle});
+        res.render("allVehicles",{admin,status:status,vehicleData:allVehicle});
     }else{
         status=false
-        res.render("home",{userObjectData,status:status,vehicleData:"No vehicle added"});
+        res.render("allVehicles",{admin,status:status,vehicleData:"No vehicle added"});
     }
 });
 
 router.get("/add_vehicles",restrictedToLoggedInUserOnly,async (req,res)=>{
     if(!req.user) return res.redirect("/")
-    try {
-        await adminModel.findById(req.session.adminid)
-        .then(admin=>{
-            if(admin){
-                res.render("addVehicles",{admin});
-            }else{
-                console.log("No document found with that ID");
-            }
-        })
-        .catch(error => {
-            console.error("Error finding document:", error);
-        });
-    } catch (error) {
-        console.error(`Error occured ${error}`);
-    }
+    let admin={
+        username:req.user.username,
+        email:req.user.email
+    };
+
+    res.render("addVehicles",{admin});
 });
 
 router.get("/update_vehicles",restrictedToLoggedInUserOnly,async (req,res)=>{
