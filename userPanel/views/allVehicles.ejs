@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/output.css">
-    <title>User Dashboard</title>
+    <title>All Vehicles Details</title>
 </head>
 
 <body class="bg-gray-900">
@@ -14,7 +14,8 @@
         <%- include('navbar') %>
             <div class="w-full h-full flex items-center justify-center relative">
                 <div class="w-full mt-24 ml-48 flex items-start justify-start px-5 py-6 gap-2 overflow-hidden flex-col">
-                    <h1 class="text-left text-slate-50 text-3xl font-noto font-normal my-5 ml-3">Vehicles added by you
+                    <h1 class="text-left text-slate-50 text-3xl font-noto font-normal my-5 ml-3">Vehicles added by
+                        Administrator
                     </h1>
                     <div class="w-full flex items-center justify-start flex-wrap gap-2">
                         <% if(status==true) {%>
@@ -84,7 +85,8 @@
                                 Your Vehicles Details</h4>
                             <div class="flex flex-col items-start">
                                 <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Owner Name :
-                                    <span id="ownerName"></span></h5>
+                                    <span id="ownerName"></span>
+                                </h5>
                                 <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Owner Phone
                                     Number : <span id="ownerPhone"></span></h5>
                                 <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle
@@ -95,6 +97,12 @@
                                         id="brand"></span></h5>
                                 <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle
                                     Registered State : <span id="reg_state"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Driver Name :
+                                    <span id="driverName"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Driver Phone
+                                    Number : <span id="driverPhone"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Driver Licence
+                                    Number : <span id="driver_licence_no"></span></h5>
                                 <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Chasis Number
                                     : <span id="chasisNo"></span></h5>
                                 <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle
@@ -107,6 +115,8 @@
                                     Certificate Valid upto : <span id="pucValidUpto"></span></h5>
                                 <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle Fit
                                     upto : <span id="fit_upto"></span></h5>
+                                <h5 class="text-slate-300 font-noto text-base font-normal text-left mb-6">Vehicle Permit
+                                    Valid upto : <span id="permitValidupto"></span></h5>
                             </div>
                             <div class="flex justify-end items-center space-x-4">
                                 <button data-modal-toggle="detailsModal" id="closeModal" type="button"
