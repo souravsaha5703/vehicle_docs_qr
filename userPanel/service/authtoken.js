@@ -4,9 +4,8 @@ const jwt=require("jsonwebtoken");
 function setUser(user){
     return jwt.sign({
         _id:user._id,
-        name:user.fullname,
-        email:user.email,
-        ph:user.phoneno
+        username:user.username,
+        email:user.admin_email
     },process.env.JWT_SECRET,{expiresIn:'1d'});
 }
 
