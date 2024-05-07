@@ -3,7 +3,7 @@ const express = require("express");
 const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
 const router = express.Router();
 const otpModel = require("../models/otpmodel");
-const userModel=require("../models/usermodel");
+const adminModel=require("../models/adminModel");
 const vehicleModel=require("../models/vehicleModel");
 const {setUser}=require("../service/authtoken");
 const {restrictedToLoggedInUserOnly}=require("../middlewares/auth");
@@ -72,14 +72,32 @@ router.post("/otpverification",async (req,res)=>{
             
             const token=setUser(adminId);
             res.cookie("uid",token);
-            // res.redirect("/home");
-            res.send("verified");
+            res.redirect("/dashboard");
         }else{
             res.redirect("/error?message="+"OTP unverified");
         }
     }catch(error){
         console.error(error);
         throw error;
+    }
+});
+
+router.get("/dashboard",restrictedToLoggedInUserOnly,async (req,res)=>{
+    if(!req.user) return res.redirect("/")
+    try {
+        await adminModel.findById(req.session.adminid)
+        .then(admin=>{
+            if(admin){
+                res.render("dashboard",{admin});
+            }else{
+                console.log("No document found with that ID");
+            }
+        })
+        .catch(error => {
+            console.error("Error finding document:", error);
+        });
+    } catch (error) {
+        console.error(`Error occured ${error}`);
     }
 });
 
@@ -101,14 +119,23 @@ router.get("/home",restrictedToLoggedInUserOnly,async (req,res)=>{
     }
 });
 
-router.get("/add_vehicles",restrictedToLoggedInUserOnly,(req,res)=>{
+router.get("/add_vehicles",restrictedToLoggedInUserOnly,async (req,res)=>{
     if(!req.user) return res.redirect("/")
-    let userObjectData={
-        userName:req.user.name,
-        userEmail:req.user.email,
-        userPhone:req.user.ph
+    try {
+        await adminModel.findById(req.session.adminid)
+        .then(admin=>{
+            if(admin){
+                res.render("addVehicles",{admin});
+            }else{
+                console.log("No document found with that ID");
+            }
+        })
+        .catch(error => {
+            console.error("Error finding document:", error);
+        });
+    } catch (error) {
+        console.error(`Error occured ${error}`);
     }
-    res.render("addVehicles",{userObjectData});
 });
 
 router.get("/update_vehicles",restrictedToLoggedInUserOnly,async (req,res)=>{

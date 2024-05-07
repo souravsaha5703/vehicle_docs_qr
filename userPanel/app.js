@@ -3,7 +3,6 @@ const path=require("path");
 const session=require("express-session");
 const cookieParser=require("cookie-parser");
 const router=require("./routes/index");
-const userRouter=require("./routes/users");
 const vehicleRouter=require("./routes/vehicles");
 const adminRouter=require("./routes/admin");
 
@@ -23,7 +22,6 @@ app.use(session({
 }));
 
 app.use("/",router);
-app.use("/",userRouter);
 app.use("/",vehicleRouter);
 app.use("/",adminRouter);
 app.set('views',path.join(__dirname,'views'));

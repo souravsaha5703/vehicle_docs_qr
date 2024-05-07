@@ -10,10 +10,6 @@ connection.then(()=>{
 });
 
 const vehicleSchema=new mongoose.Schema({
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    },
     ownerName:{
         type:String,
         required:true
@@ -44,6 +40,19 @@ const vehicleSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
+    driverName:{
+        type:String,
+        required:true
+    },
+    driverPhone:{
+        type:String,
+        required:true
+    },
+    driver_licence_no:{
+        type:String,
+        required:true,
+        unique:true
+    },
     reg_upto:{
         type:Date,
         required:true
@@ -61,6 +70,10 @@ const vehicleSchema=new mongoose.Schema({
         required:true
     },
     fit_upto:{
+        type:Date,
+        required:true
+    },
+    permitValidupto:{
         type:Date,
         required:true
     }

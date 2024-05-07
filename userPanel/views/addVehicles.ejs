@@ -22,7 +22,7 @@
                 <div class="border border-slate-400 flex flex-col rounded-xl border-indigo-5 py-12 px-12">
                     <h1 class="text-zinc-50 font-noto text-2xl font-medium text-left mb-5">Vehicle Details :-
                     </h1>
-                    <form class="flex flex-col items-center justify-center" action="/verifydocs" method="post">
+                    <form class="flex flex-col items-center justify-center" action="/addVehicleDetails" method="post">
                         <div class="w-full p-2 flex items-center justify-center gap-10 max-[880px]:flex-col max-[880px]:gap-4">
                             <div class="mb-5">
                                 <label for="owner name"
@@ -116,12 +116,48 @@
                         </div>
                         <div class="w-full p-2 flex items-center justify-center gap-10 max-[880px]:flex-col max-[880px]:gap-4">
                             <div class="mb-5">
+                                <label for="driver name"
+                                    class="block mb-2 text-lg font-medium font-noto text-gray-900 dark:text-white max-[964px]:text-base">
+                                    Driver Name</label>
+                                <input type="text" id="driverName" name="driverName"
+                                    class="outline-none h-12 rounded-md bg-transparent w-72 px-3 border-2 border-slate-600 text-slate-50 font-normal focus:border-slate-50 ease-linear transition-all duration-100 uppercase placeholder:text-slate-300 text-base placeholder:capitalize max-[964px]:w-64"
+                                    placeholder="Enter Driver Name" required />
+                            </div>
+                            <div class="mb-5">
+                                <label for="driver no"
+                                    class="block mb-2 text-lg font-medium font-noto text-gray-900 dark:text-white max-[964px]:text-base">
+                                    Driver Phone No</label>
+                                <input type="text" id="driverPhone" name="driverPhone"
+                                    class="outline-none h-12 rounded-md bg-transparent w-72 px-3 border-2 border-slate-600 text-slate-50 font-normal focus:border-slate-50 ease-linear transition-all duration-100 uppercase placeholder:text-slate-300 text-base placeholder:capitalize max-[964px]:w-64"
+                                    placeholder="Enter Driver Phone Number" required />
+                            </div>
+                        </div>
+                        <div class="w-full p-2 flex items-center justify-center gap-10 max-[880px]:flex-col max-[880px]:gap-4">
+                            <div class="mb-5">
+                                <label for="driver licence"
+                                    class="block mb-2 text-lg font-medium font-noto text-gray-900 dark:text-white max-[964px]:text-base">
+                                    Driver Licence No</label>
+                                <input type="text" id="driverLicence" name="driverLicence"
+                                    class="outline-none h-12 rounded-md bg-transparent w-72 px-3 border-2 border-slate-600 text-slate-50 font-normal focus:border-slate-50 ease-linear transition-all duration-100 uppercase placeholder:text-slate-300 text-base placeholder:capitalize max-[964px]:w-64"
+                                    placeholder="Enter Driver Licence Number" required />
+                            </div>
+                            <div class="mb-5">
                                 <label for="chasis no"
                                     class="block mb-2 text-lg font-medium font-noto text-gray-900 dark:text-white max-[964px]:text-base">
                                     Chasis No</label>
                                 <input type="text" id="chasisNo" name="chasisNo"
                                     class="outline-none h-12 rounded-md bg-transparent w-72 px-3 border-2 border-slate-600 text-slate-50 font-normal focus:border-slate-50 ease-linear transition-all duration-100 uppercase placeholder:text-slate-300 text-base placeholder:capitalize max-[964px]:w-64"
                                     placeholder="Enter Vehicle Chasis Number" required />
+                            </div>
+                        </div>
+                        <div class="w-full p-2 flex items-center justify-center gap-10 max-[880px]:flex-col max-[880px]:gap-4">
+                            <div class="mb-5">
+                                <label for="permit"
+                                    class="block mb-2 text-lg font-medium font-noto text-gray-900 dark:text-white max-[964px]:text-base">
+                                    Permit Valid Upto</label>
+                                <input type="date" id="permitvalidUpto" name="permitvalidUpto"
+                                    class="outline-none h-12 rounded-md bg-gray-900 w-72 px-3 border-2 border-slate-600 text-slate-50 font-normal focus:border-slate-50 ease-linear transition-all duration-100 placeholder:text-slate-300 text-base max-[964px]:w-64"
+                                    required />
                             </div>
                             <div class="mb-5">
                                 <label for="registration"
@@ -169,8 +205,7 @@
                         </div>
 
                         <button type="submit"
-                            class="px-6 py-3 outline-none bg-blue-700 text-white font-poppins mt-5 rounded-lg text-xl font-normal hover:bg-blue-900 hover:text-slate-50 transition-all ease-in-out duration-150 max-[990px]:text-base">Send
-                            for verification</button>
+                            class="px-6 py-3 outline-none bg-blue-700 text-white font-poppins mt-5 rounded-lg text-xl font-normal hover:bg-blue-900 hover:text-slate-50 transition-all ease-in-out duration-150 max-[990px]:text-base">Add Vehicle Details</button>
                     </form>
                 </div>
             </div>

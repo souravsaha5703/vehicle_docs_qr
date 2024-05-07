@@ -1,13 +1,13 @@
 <aside id="separator-sidebar" class="fixed top-0 left-0 z-40 w-48 h-screen shadow-2xl shadow-slate-200/5" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-slate-950 w-full flex flex-col items-center justify-start">
-        <h1 class="text-slate-50 text-2xl my-5 font-oswald font-semibold text-center">CarDocs 360</h1>
+        <h1 class="text-slate-50 text-2xl my-5 font-oswald font-semibold text-center">Vehicle Docs 360</h1>
         <img src="../images/user-person-profile.svg" alt="profile image" class="size-12 bg-cover bg-center">
         <h3 class="text-white text-base mt-2 mb-5 font-noto font-semibold text-center">
-            <%= userObjectData.userName %>
+            <%= admin.username %>
         </h3>
         <ul class="space-y-2 font-medium font-poppins text-lg">
             <li>
-                <a href="/home"
+                <a href="/dashboard"
                     class="flex items-center p-3 text-slate-50 rounded-lg hover:bg-white hover:text-slate-950 group">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="27px" width="27px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xml:space="preserve">
                         <path style="fill:#F77935;" d="M272.177,8.358V255.73c0,4.291-1.704,8.406-4.739,11.438L92.52,442.087  c43.641,38.315,100.843,61.554,163.48,61.554c136.917,0,247.912-110.994,247.912-247.912  C503.912,124.249,401.553,16.694,272.177,8.358z"/>
@@ -18,6 +18,22 @@
                         <path d="M442.45,80.32C397.798,32.886,337.512,4.462,272.697,0.287c-2.239-0.145-4.423,0.642-6.052,2.171  c-1.631,1.529-2.556,3.665-2.556,5.9V255.73c0,2.16-0.841,4.192-2.369,5.719l-62.192,62.192c-3.159,3.159-3.159,8.28,0,11.439  c3.159,3.16,8.28,3.159,11.439,0l62.191-62.191c4.583-4.582,7.108-10.676,7.108-17.159V17.139  c57.426,5.769,110.557,31.938,150.405,74.269c42.015,44.634,65.153,102.991,65.153,164.322c0,64.059-24.946,124.284-70.242,169.581  S320.06,495.553,256,495.553c-55.357,0-108.832-19.1-151.548-53.96l88.304-88.306c3.159-3.159,3.159-8.28,0-11.438  c-3.159-3.159-8.28-3.159-11.438,0L86.8,436.368c-1.581,1.581-2.437,3.747-2.365,5.981c0.072,2.236,1.068,4.341,2.748,5.816  c46.69,40.99,106.644,63.565,168.817,63.565c68.38,0,132.667-26.628,181.02-74.98C485.372,388.398,512,324.111,512,255.73  C512,190.262,487.3,127.968,442.45,80.32z"/>
                         </svg>
                     <span class="ms-3 capitalize text-sm">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/home"
+                    class="flex items-center p-3 text-slate-50 rounded-lg hover:bg-white hover:text-slate-950 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 48 48" fill="none">
+                        <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
+                        <rect x="8" y="4" width="32" height="40" rx="2" fill="#2F88FF" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
+                        <path d="M21 14H33" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 24H33" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 34H33" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15 16C16.1046 16 17 15.1046 17 14C17 12.8954 16.1046 12 15 12C13.8954 12 13 12.8954 13 14C13 15.1046 13.8954 16 15 16Z" fill="white"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15 26C16.1046 26 17 25.1046 17 24C17 22.8954 16.1046 22 15 22C13.8954 22 13 22.8954 13 24C13 25.1046 13.8954 26 15 26Z" fill="white"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15 36C16.1046 36 17 35.1046 17 34C17 32.8954 16.1046 32 15 32C13.8954 32 13 32.8954 13 34C13 35.1046 13.8954 36 15 36Z" fill="white"/>
+                        </svg>
+                    <span class="ms-3 capitalize text-sm">Vehicle Docs</span>
                 </a>
             </li>
             <li>
