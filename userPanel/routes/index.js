@@ -122,19 +122,18 @@ router.get("/add_vehicles",restrictedToLoggedInUserOnly,async (req,res)=>{
 
 router.get("/update_vehicles",restrictedToLoggedInUserOnly,async (req,res)=>{
     if(!req.user) return res.redirect("/")
-    let userObjectData={
-        userName:req.user.name,
-        userEmail:req.user.email,
-        userPhone:req.user.ph
-    }
+    let admin={
+        username:req.user.username,
+        email:req.user.email
+    };
     let status;
-    const allVehicleforUpdate=await vehicleModel.find({userId:req.user._id});
+    const allVehicleforUpdate=await vehicleModel.find({});
     if(allVehicleforUpdate){
         status=true
-        res.render("updateVehicle",{userObjectData,status:status,vehicleData:allVehicleforUpdate});
+        res.render("updateVehicle",{admin,status:status,vehicleData:allVehicleforUpdate});
     }else{
         status=false
-        res.render("updateVehicle",{userObjectData,status:status,vehicleData:"No vehicle added"});
+        res.render("updateVehicle",{admin,status:status,vehicleData:"No vehicle available"});
     }
 });
 

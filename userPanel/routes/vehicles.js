@@ -48,17 +48,17 @@ router.get("/vehicleData/:id",async (req,res)=>{
 
 router.post("/updateVehicle/:id",async (req,res)=>{
     let VehicleId=req.params.id;
-    const {pollutionUpto,registrationUpto,taxpaidUpto,insurancepaidUpto,fitUpto}=req.body;
+    const {pollutionUpto,registrationUpto,taxpaidUpto,insurancepaidUpto,fitUpto,permitvalidupto}=req.body;
     try{
-        const updatedVehicle=await vehicleModel.findByIdAndUpdate(VehicleId,{reg_upto:registrationUpto,taxPaidUpto:taxpaidUpto,insurancePaidUpto:insurancepaidUpto,pucValidUpto:pollutionUpto,fit_upto:fitUpto},{new:true});
+        const updatedVehicle=await vehicleModel.findByIdAndUpdate(VehicleId,{reg_upto:registrationUpto,taxPaidUpto:taxpaidUpto,insurancePaidUpto:insurancepaidUpto,pucValidUpto:pollutionUpto,fit_upto:fitUpto,permitValidupto:permitvalidupto},{new:true});
 
         if(updatedVehicle){
-            res.redirect("/home");
+            res.redirect("/dashboard");
         }
     }catch(error){
         console.error(error);
     }
     
-})
+});
 
 module.exports=router

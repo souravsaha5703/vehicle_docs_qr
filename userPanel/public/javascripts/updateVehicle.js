@@ -31,16 +31,19 @@ function setValue(data){
     let insuranceDate=new Date(data.insurancePaidUpto);
     let puccDate=new Date(data.pucValidUpto);
     let fitDate=new Date(data.fit_upto);
+    let permitDate=new Date(data.permitValidupto);
     let formattedRegDate=regDate.toISOString().split('T')[0];
     let formattedTaxPaidDate=taxDate.toISOString().split('T')[0];
     let formattedInsurancePaidDate=insuranceDate.toISOString().split('T')[0];
     let formattedPuccDate=puccDate.toISOString().split('T')[0];
     let formattedFitDate=fitDate.toISOString().split('T')[0];
+    let formattedPermitDate=permitDate.toISOString().split('T')[0];
     document.getElementById("pollutionUpto").value=formattedPuccDate;
     document.getElementById("registrationUpto").value=formattedRegDate;
     document.getElementById("taxpaidUpto").value=formattedTaxPaidDate;
     document.getElementById("insurancepaidUpto").value=formattedInsurancePaidDate;
     document.getElementById("fitUpto").value=formattedFitDate;
+    document.getElementById("permitUpto").value=formattedPermitDate;
     document.getElementById("vehicleId").value=data._id;
 }
 
@@ -59,8 +62,9 @@ document.getElementById("updateForm").addEventListener('submit',(e)=>{
     let taxpaidUpto=document.getElementById("taxpaidUpto").value;
     let insurancePaidUpto=document.getElementById("insurancepaidUpto").value;
     let fitUpto=document.getElementById("fitUpto").value;
+    let permitvalidupto=document.getElementById("permitUpto").value;
 
-    const updatedVehicleData={pollutionUpto,registrationUpto,taxpaidUpto,insurancePaidUpto,fitUpto};
+    const updatedVehicleData={pollutionUpto,registrationUpto,taxpaidUpto,insurancePaidUpto,fitUpto,permitvalidupto};
 
     fetch(`/updateVehicle/${id}`,{
         method:'POST',
