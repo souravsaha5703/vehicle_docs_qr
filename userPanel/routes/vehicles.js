@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express=require("express");
 const {MongoClient}=require("mongodb");
+const qrcode=require('qrcode');
 const router=express.Router();
 const vehicleModel=require("../models/vehicleModel");
 const {restrictedToLoggedInUserOnly}=require("../middlewares/auth");
@@ -59,6 +60,38 @@ router.post("/updateVehicle/:id",async (req,res)=>{
         console.error(error);
     }
     
+});
+
+router.get("/getqr/:id",async (req,res)=>{
+    let {id}=req.params;
+    try {
+        const specificVehicle=await vehicleModel.findById(id);
+        const urlData={
+            ownerName:specificVehicle.ownerName,
+            ownerPhone:specificVehicle.ownerPhone,
+            vehicleNo:specificVehicle.vehicleNo,
+            engineNo:specificVehicle.engineNo,
+            chasisNo:specificVehicle.chasisNo,
+            regDate:specificVehicle.reg_upto,
+            taxpaidupto:specificVehicle.taxPaidUpto,
+            insuranceupto:specificVehicle.insurancePaidUpto,
+            pucvalid:specificVehicle.pucValidUpto,
+            fitupto:specificVehicle.fit_upto,
+            permitupto:specificVehicle.permitValidupto
+        };
+
+        const urlJson=JSON.stringify(urlData);
+        qrcode.toDataURL(urlJson,(err,qr)=>{
+            if(err){
+                console.error(err);
+                return;
+            }else{
+                res.json({img_url:qr});
+            }
+        });
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 module.exports=router
