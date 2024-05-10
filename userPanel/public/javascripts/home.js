@@ -2,12 +2,36 @@ const detailsbtns=document.querySelectorAll(".detailsBtn");
 const detailsModel=document.getElementById("detailsModal");
 const closeModal=document.getElementById("closeModal");
 
+const qrsvg=document.querySelectorAll(".qrsvg");
+const qrbtn=document.querySelectorAll(".qrbtn");
+const qrModal=document.getElementById("qrModal");
+const qrcloseModal=document.getElementById("qrcloseModal");
+
 detailsbtns.forEach((btn)=>{
     btn.addEventListener("click",(e)=>{
         e.preventDefault();
         detailsModel.classList.remove("hidden");
         detailsModel.classList.add("block");
         getData(e.target.id)
+    });
+});
+
+qrsvg.forEach((qrsvgs)=>{
+    qrsvgs.addEventListener("click",(e)=>{
+        e.preventDefault();
+        qrModal.classList.remove("hidden");
+        qrModal.classList.add("block");
+        console.log(e.target.id);
+        // getQr(e.target.id);
+    });
+});
+
+qrbtn.forEach((btn)=>{
+    btn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        qrModal.classList.remove("hidden");
+        qrModal.classList.add("block");
+        getQr(e.target.id);
     });
 });
 
@@ -23,7 +47,19 @@ async function getData(id){
     }catch(error){
         console.error(error);
     }
+}
 
+async function getQr(id){
+    try {
+        const response=await fetch(`/getqr/${id}`);
+        if(!response.ok){
+            throw new Error('Failed to fetch data');
+        }
+        const data=await response.json();
+        document.getElementById('qrImg').src=data.img_url;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function setValue(data){
@@ -71,4 +107,10 @@ closeModal.addEventListener("click",(e)=>{
     e.preventDefault();
     detailsModel.classList.remove("block");
     detailsModel.classList.add("hidden");
+});
+
+qrcloseModal.addEventListener("click",(e)=>{
+    e.preventDefault();
+    qrModal.classList.remove("block");
+    qrModal.classList.add("hidden");
 });
