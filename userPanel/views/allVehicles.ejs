@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../public/images/favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../images/favicon_io/site.webmanifest">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/output.css">
     <title>All Vehicles Details</title>
@@ -11,12 +16,12 @@
 
 <body class="bg-gray-900">
     <%- include('sidebar') %>
-        <%- include('navbar') %>
             <div class="w-full h-full flex items-center justify-center relative">
-                <div class="w-full mt-24 ml-48 flex items-start justify-start px-5 py-6 gap-2 overflow-hidden flex-col">
-                    <h1 class="text-left text-slate-50 text-3xl font-noto font-normal my-5 ml-3">Vehicles added by
-                        Administrator
-                    </h1>
+                <div class="w-full mt-3 ml-48 flex items-start justify-start px-5 py-6 gap-2 overflow-hidden flex-col">
+                    <h1 class="text-left text-white text-4xl font-poppins font-normal ml-3 underline">All Vehicle Details</h1>
+                    <h2 class="text-left text-slate-100 text-3xl font-noto font-normal my-5 ml-3">Vehicles added by
+                        Administrator :-
+                    </h2>
                     <div class="w-full flex items-center justify-start flex-wrap gap-2">
                         <% if(status==true) {%>
                             <% vehicleData.forEach((data)=>{ %>
@@ -24,9 +29,10 @@
                                     class="border border-gray-700 p-3 rounded-lg transform transition duration-500 w-[400px]">
                                     <div
                                         class="bg-gradient-to-tl from-slate-950 to-gray-900 shadow-2xl relative rounded-lg p-7 w-full">
-                                        <div
-                                            class="absolute bottom-6 right-6 border border-blue-500 px-2 py-2 rounded-sm cursor-pointer">
-                                            <svg fill="#bae6fd" width="20px" height="20px" viewBox="0 0 24 24"
+                                        <button
+                                            class="absolute bottom-6 right-6 border border-blue-500 px-2 py-2 rounded-sm cursor-pointer qrbtn"
+                                            data-modal-toggle="qrModal" id="<%= data._id  %>">
+                                            <svg class="qrsvg" id="<%= data._id  %>" fill="#bae6fd" width="20px" height="20px" viewBox="0 0 24 24"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
@@ -37,7 +43,7 @@
                                                     </path>
                                                 </g>
                                             </svg>
-                                        </div>
+                                        </button>
                                         <h4 class="font-noto font-normal text-base text-gray-50 capitalize text-left">
                                             Vehicle Reg no
                                             : <%= data.vehicleNo %>
@@ -120,6 +126,21 @@
                             </div>
                             <div class="flex justify-end items-center space-x-4">
                                 <button data-modal-toggle="detailsModal" id="closeModal" type="button"
+                                    class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-sm font-medium text-base font-noto text-white">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="qrModal"
+                    class="hidden fixed inset-0 bg-gray-500 bg-opacity-50 overflow-y-auto h-screen w-screen px-4 md:px-8">
+                    <div
+                        class="relative z-40 rounded-lg shadow-lg mx-auto w-full md:w-1/2 mt-24 transition-all duration-150 ease-in-out">
+                        <div class="modal-content bg-slate-950 p-7 rounded-md flex items-center justify-center flex-col">
+                            <h3 class="text-center text-slate-100 text-2xl font-poppins font-normal my-4">Vehicle QR Code</h3>
+                            <img  alt="Qr Image" class="size-64 object-center bg-cover" id="qrImg">
+                            <div class="flex justify-end items-center space-x-4 mt-5">
+                                <button data-modal-toggle="qrModal" id="qrcloseModal" type="button"
                                     class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-sm font-medium text-base font-noto text-white">Close</button>
                             </div>
                         </div>
