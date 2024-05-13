@@ -1,4 +1,5 @@
 const express=require("express");
+const cors=require('cors');
 const path=require("path");
 const session=require("express-session");
 const cookieParser=require("cookie-parser");
@@ -9,6 +10,12 @@ const adminRouter=require("./routes/admin");
 const app=express();
 
 const PORT=7000;
+
+app.use(cors({
+    origin:["http://localhost:5173"],
+    methods:["POST","GET"],
+    credentials:true
+}));
 
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());

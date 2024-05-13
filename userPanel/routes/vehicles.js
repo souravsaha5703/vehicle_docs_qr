@@ -71,7 +71,12 @@ router.get("/getqr/:id",async (req,res)=>{
             ownerPhone:specificVehicle.ownerPhone,
             vehicleNo:specificVehicle.vehicleNo,
             engineNo:specificVehicle.engineNo,
+            brand:specificVehicle.brand,
+            regState:specificVehicle.reg_state,
             chasisNo:specificVehicle.chasisNo,
+            driverName:specificVehicle.driverName,
+            driverPhone:specificVehicle.driverPhone,
+            driverLicence:specificVehicle.driver_licence_no,
             regDate:specificVehicle.reg_upto,
             taxpaidupto:specificVehicle.taxPaidUpto,
             insuranceupto:specificVehicle.insurancePaidUpto,
@@ -89,6 +94,39 @@ router.get("/getqr/:id",async (req,res)=>{
                 res.json({img_url:qr});
             }
         });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.post("/verifyVehicleDetails",async (req,res)=>{
+    let verificationData =req.body;
+    try {
+        const findVehicleData=await vehicleModel.findOne({
+            ownerName:verificationData.ownerName,
+            ownerPhone:verificationData.ownerPhone,
+            vehicleNo:verificationData.vehicleNo,
+            engineNo:verificationData.engineNo,
+            brand:verificationData.brand,
+            reg_state:verificationData.regState,
+            chasisNo:verificationData.chasisNo,
+            driverName:verificationData.driverName,
+            driverPhone:verificationData.driverPhone,
+            driver_licence_no:verificationData.driverLicence,
+            reg_upto:verificationData.regDate,
+            taxPaidUpto:verificationData.taxpaidupto,
+            insurancePaidUpto:verificationData.insuranceupto,
+            pucValidUpto:verificationData.pucvalid,
+            fit_upto:verificationData.fitupto,
+            permitValidupto:verificationData.permitupto
+        });
+
+        if(findVehicleData){
+            res.json({verified:true});
+            console.log("vehicle verified");
+        }else{
+            res.json({verified:false});
+        }
     } catch (error) {
         console.error(error);
     }
