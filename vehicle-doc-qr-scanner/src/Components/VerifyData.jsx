@@ -17,8 +17,19 @@ function VerifyData() {
     axios.post("http://localhost:7000/verifyVehicleDetails",jsonData)
     .then(res=>{
       if(res.data.verified){
-        setVerified(true);
-        setAfterVerify(true);
+        axios.post("http://localhost:7000/createEntry",{
+          id:jsonData.vehicleId
+        })
+        .then(res=>{
+          if(res.data.done){
+            setVerified(true);
+            setAfterVerify(true);
+          }else{
+            setVerified(false);
+            setAfterVerify(true);
+          }
+        })
+        .catch(err=>console.log(err.response.data));
       }else{
         setVerified(false);
         setAfterVerify(true);
@@ -62,12 +73,12 @@ function VerifyData() {
           {verified ? (
             <>
               <img src={tick_img} alt="Tick Image" className='w-48' />
-              <h2 className='font-sans font-bold text-4xl mt-10 text-green-500 text-center capitalize'>Vehicle Data Verified Successfully</h2>
+              <h2 className='font-sans font-bold text-4xl mt-10 text-green-500 text-center capitalize'>Vehicle Data Verified Successfully and Entry Accepted</h2>
             </>
           ) : (
             <>
               <img src={cross_img} alt="Cross Image" className='w-48'/>
-              <h2 className='font-sans font-bold text-4xl mt-10 text-red-500 text-center capitalize'>Vehicle Data Verified Successfully</h2>
+              <h2 className='font-sans font-bold text-4xl mt-10 text-red-500 text-center capitalize'>Vehicle Data Not Verified Successfully and Entry Denied</h2>
             </>
           )}
         </div>

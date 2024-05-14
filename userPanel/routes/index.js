@@ -5,6 +5,7 @@ const router = express.Router();
 const otpModel = require("../models/otpmodel");
 const adminModel=require("../models/adminModel");
 const vehicleModel=require("../models/vehicleModel");
+const entriesModel=require('../models/entriesModel');
 const {setUser}=require("../service/authtoken");
 const {restrictedToLoggedInUserOnly}=require("../middlewares/auth");
 
@@ -89,8 +90,32 @@ router.get("/dashboard",restrictedToLoggedInUserOnly,async (req,res)=>{
         username:req.user.username,
         email:req.user.email
     };
-
-    res.render("dashboard",{admin});
+    const allEntries=await entriesModel.find({});
+    const arrayIds=[];
+    for(let i=0;i<allEntries.length;i++){
+        arrayIds.push(allEntries[i].vehicleId);
+    }
+    const allEntryData=[];
+    vehicleModel.find({_id:{$in:arrayIds}})
+    .then(documents=>{
+        for(let i=0;i<allEntries.length;i++){
+            let dataObj={
+                vno:documents[0].vehicleNo,
+                owner:documents[0].ownerName,
+                driverLicence:documents[0].driver_licence_no,
+                time:allEntries[i].timestamp
+            };
+            allEntryData.push(dataObj);
+        }
+        if(allEntryData.length>0){
+            res.render("dashboard",{admin,entryData:allEntryData,status:true});
+        }else{
+            res.render("dashboard",{admin,status:false});
+        }
+    })
+    .catch(err => {
+        console.error(err);
+    });
 });
 
 router.get("/allVehicles",restrictedToLoggedInUserOnly,async (req,res)=>{

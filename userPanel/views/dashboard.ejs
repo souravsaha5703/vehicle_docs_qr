@@ -16,13 +16,69 @@
 
 <body class="bg-gray-900">
     <%- include('sidebar') %>
-            <div class="w-full h-full flex items-center justify-center relative">
-                <div class="w-full ml-48 flex items-start justify-start px-5 py-6 gap-2 overflow-hidden flex-col">
-                    <h1 class="text-left text-slate-50 text-4xl font-poppins font-medium mt-2 ml-3 underline">Dashboard</h1>
-                    <!-- <h1 class="text-left text-slate-50 text-4xl font-oswald font-bold my-5 ml-3">Hello, <%= admin.username  %>
-                    </h1> -->
+        <div class="w-full h-full flex items-center justify-center relative">
+            <div class="w-full ml-48 flex items-center justify-center px-5 py-6 gap-2 overflow-hidden flex-col">
+                <div class="w-full pl-3 pr-10 flex items-center justify-between">
+                    <h1 class="text-slate-50 text-4xl font-poppins font-medium mt-2 underline">Dashboard</h1>
+                    <div
+                        class="clock w-20 flex items-center justify-center gap-1 font-noto text-4xl text-slate-50 font-medium">
+                        <span id="hrs">00</span>
+                        <span>:</span>
+                        <span id="min">00</span>
+                        <span>:</span>
+                        <span id="sec">00</span>
+                    </div>
+                </div>
+                <h1 class="text-slate-50 text-2xl font-noto font-normal mt-10 ml-3 text-left">Today's Report :-</h1>
+
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-11/12 mt-10">
+                    <table class="w-full text-sm text-left font-noto rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Vehicle No.
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Owner Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Driver Licence No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    In Time
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(status==true) {%>
+                                <% entryData.forEach((data)=>{%>
+                                    <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <%= data.vno  %>
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <%= data.owner  %>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <%= data.driverLicence  %>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <%= data.time  %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                <% }else { %>
+                                    No Entry Yet
+                                    <% } %>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+
+        <script src="../javascripts/dashboard.js"></script>
 </body>
 
 </html>

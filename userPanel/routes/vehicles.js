@@ -67,6 +67,7 @@ router.get("/getqr/:id",async (req,res)=>{
     try {
         const specificVehicle=await vehicleModel.findById(id);
         const urlData={
+            vehicleId:specificVehicle._id,
             ownerName:specificVehicle.ownerName,
             ownerPhone:specificVehicle.ownerPhone,
             vehicleNo:specificVehicle.vehicleNo,

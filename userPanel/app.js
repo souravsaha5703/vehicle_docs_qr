@@ -6,6 +6,7 @@ const cookieParser=require("cookie-parser");
 const router=require("./routes/index");
 const vehicleRouter=require("./routes/vehicles");
 const adminRouter=require("./routes/admin");
+const vehicleEntryDetailsRouter=require("./routes/vehicleEntryDetails");
 
 const app=express();
 
@@ -31,6 +32,7 @@ app.use(session({
 app.use("/",router);
 app.use("/",vehicleRouter);
 app.use("/",adminRouter);
+app.use("/",vehicleEntryDetailsRouter);
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
