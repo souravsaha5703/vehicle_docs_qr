@@ -30,6 +30,51 @@
                     </div>
                 </div>
                 <h1 class="text-slate-50 text-2xl font-noto font-normal mt-10 ml-3 text-left">Today's Report :-</h1>
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-11/12 mt-10">
+                    <table class="w-full text-sm text-left font-noto rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Vehicle No.
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Owner Name
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Driver Licence No
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    In Time
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if(status==true) {%>
+                                <% newData.forEach((data)=>{%>
+                                    <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <%= data.vno  %>
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <%= data.owner  %>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <%= data.driverLicence  %>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <%= data.time  %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                <% }else { %>
+                                    No Entry Yet for Today
+                                    <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <h1 class="text-slate-50 text-2xl font-noto font-normal mt-10 ml-3 text-left">All Reports :-</h1>
 
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-11/12 mt-10">
                     <table class="w-full text-sm text-left font-noto rtl:text-right text-gray-500 dark:text-gray-400">

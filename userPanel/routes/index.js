@@ -13,7 +13,7 @@ const mailerSend = new MailerSend({
     apiKey: process.env.MAILERSEND_API_KEY,
 });
 
-const sentFrom = new Sender("info@trial-jy7zpl93303l5vx6.mlsender.net", "Vehicle Docs 360");
+const sentFrom = new Sender("info@trial-3z0vkloz7yx47qrx.mlsender.net", "Vehicle Docs 360");
 
 router.get("/", (req, res) => {
     res.render("login", { title: 'login' });
@@ -46,7 +46,7 @@ router.get("/verifyotp", async (req, res) => {
             .setTo(recipients)
             .setReplyTo(sentFrom)
             .setSubject("OTP Verification Email for Administrator Login")
-            .setTemplateId('z3m5jgrd1no4dpyo')
+            .setTemplateId('3vz9dlev9zp4kj50')
             .setPersonalization(personalization);
         await mailerSend.email.send(emailParams);
 
@@ -98,17 +98,30 @@ router.get("/dashboard",restrictedToLoggedInUserOnly,async (req,res)=>{
     const allEntryData=[];
     vehicleModel.find({_id:{$in:arrayIds}})
     .then(documents=>{
-        for(let i=0;i<allEntries.length;i++){
-            let dataObj={
-                vno:documents[0].vehicleNo,
-                owner:documents[0].ownerName,
-                driverLicence:documents[0].driver_licence_no,
-                time:allEntries[i].timestamp
-            };
-            allEntryData.push(dataObj);
+        for (let i = 0; i < arrayIds.length; i++){
+            const id = arrayIds[i];
+            const matchingdoc=documents.find(doc => doc._id.toString() === id.toString());
+            if (matchingdoc) {
+                let dataObj={
+                        vno:matchingdoc.vehicleNo,
+                        owner:matchingdoc.ownerName,
+                        driverLicence:matchingdoc.driver_licence_no,
+                        time:allEntries[i].timestamp
+                };
+                allEntryData.push(dataObj);
+            } else {
+                console.log("No document found for ID:");
+            }
+        }
+        const today=new Date().toISOString().split('T')[0];
+        const todaysData=[];
+        for(let data of allEntryData){
+           if(data.time.toISOString().split('T')[0]==today){
+            todaysData.push({...data})
+           }
         }
         if(allEntryData.length>0){
-            res.render("dashboard",{admin,entryData:allEntryData,status:true});
+            res.render("dashboard",{admin,entryData:allEntryData,status:true,newData:todaysData});
         }else{
             res.render("dashboard",{admin,status:false});
         }
