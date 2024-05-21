@@ -40,13 +40,15 @@ router.post('/adminLogin',async (req,res)=>{
                     let adminId=adminExist._id;
                     req.session.adminEmail=adminExist.admin_email;
                     req.session.adminid=adminId;
-                    res.redirect("/verifyotp");
+                    res.json({adminExist:true,passMatched:true});
                 } else {
-                    res.redirect("/error?message="+"Password does not match");
+                    // res.redirect("/error?message="+"Password does not match");
+                    res.json({adminExist:true,passMatched:false});
                 }
             })
         }else{
-            res.redirect("/error?message="+"Admin not found, please try again with valid credentials");
+            // res.redirect("/error?message="+"Admin not found, please try again with valid credentials");
+            res.json({adminExist:false});
         }
     } catch (error) {
         console.error(`Error occured ${error}`);

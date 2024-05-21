@@ -57,6 +57,7 @@ async function getQr(id){
         }
         const data=await response.json();
         document.getElementById('qrImg').src=data.img_url;
+        document.getElementById('downloadLink').href=data.img_url;
     } catch (error) {
         console.error(error);
     }
