@@ -42,12 +42,10 @@ router.post('/adminLogin',async (req,res)=>{
                     req.session.adminid=adminId;
                     res.json({adminExist:true,passMatched:true});
                 } else {
-                    // res.redirect("/error?message="+"Password does not match");
                     res.json({adminExist:true,passMatched:false});
                 }
             })
         }else{
-            // res.redirect("/error?message="+"Admin not found, please try again with valid credentials");
             res.json({adminExist:false});
         }
     } catch (error) {

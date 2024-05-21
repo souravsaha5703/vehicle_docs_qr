@@ -59,7 +59,6 @@ router.get("/verifyotp", async (req, res) => {
     } catch (error) {
         console.error(error);
     }
-    res.render("verifyotp", { title: "hehe" });
 });
 
 router.post("/otpverification",async (req,res)=>{
@@ -74,9 +73,9 @@ router.post("/otpverification",async (req,res)=>{
             
             const token=setUser(activeAdmin);
             res.cookie("uid",token);
-            res.redirect("/dashboard");
+            res.json({verified:true});
         }else{
-            res.redirect("/error?message="+"OTP unverified");
+            res.json({verified:false});
         }
     }catch(error){
         console.error(error);
@@ -173,13 +172,6 @@ router.get("/update_vehicles",restrictedToLoggedInUserOnly,async (req,res)=>{
         status=false
         res.render("updateVehicle",{admin,status:status,vehicleData:"No vehicle available"});
     }
-});
-
-router.get("/error",(req,res)=>{
-    let data={
-        message:req.query.message
-    }
-    res.render("error",data);
 });
 
 router.get("/errorOccured",(req,res)=>{
