@@ -14,10 +14,10 @@ function VerifyData() {
 
   const sendForVerification=(e)=>{
     e.preventDefault();
-    axios.post("http://localhost:7000/verifyVehicleDetails",jsonData)
+    axios.post("https://vehicledocs360.onrender.com/verifyVehicleDetails",jsonData)
     .then(res=>{
       if(res.data.verified){
-        axios.post("http://localhost:7000/createEntry",{
+        axios.post("https://vehicledocs360.onrender.com/createEntry",{
           id:jsonData.vehicleId
         })
         .then(res=>{
