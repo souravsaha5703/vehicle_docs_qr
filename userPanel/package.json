@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node app.js",
     "start": "nodemon app.js",
     "tailwind": "npx tailwindcss -i ./public/styles/input.css -o ./public/styles/output.css --watch"
   },
