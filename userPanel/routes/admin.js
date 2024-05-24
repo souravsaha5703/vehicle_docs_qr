@@ -51,6 +51,17 @@ router.post('/adminLogin',async (req,res)=>{
     } catch (error) {
         console.error(`Error occured ${error}`);
     }
-})
+});
+
+router.get('/adminLogout',(req,res)=>{
+    req.session.destroy(err=>{
+        if(err){
+            console.error(err)
+        }else{
+            res.clearCookie('uid');
+            res.redirect('/dashboard');
+        }
+    });
+});
 
 module.exports=router
