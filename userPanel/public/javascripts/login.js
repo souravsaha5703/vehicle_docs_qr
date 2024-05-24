@@ -10,7 +10,7 @@ loginForm.addEventListener('submit',async (e)=>{
     const data={username,password};
 
     try {
-        const response=await fetch("http://localhost:7000/adminLogin",{
+        const response=await fetch("https://vehicledocs360.onrender.com/adminLogin",{
             method:'POST',
             headers:{'Content-Type': 'application/json'},
             body:JSON.stringify(data)

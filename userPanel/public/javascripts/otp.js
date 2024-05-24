@@ -9,7 +9,7 @@ otpForm.addEventListener('submit',async (e)=>{
     const data={otp};
 
     try {
-        const response=await fetch("http://localhost:7000/otpverification",{
+        const response=await fetch("https://vehicledocs360.onrender.com/otpverification",{
             method:"POST",
             headers:{'Content-Type': 'application/json'},
             body:JSON.stringify(data)

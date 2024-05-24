@@ -13,7 +13,7 @@ updatebtns.forEach((btn)=>{
 
 async function getData(id){
     try{
-        const response=await fetch(`/vehicleData/${id}`);
+        const response=await fetch(`https://vehicledocs360.onrender.com/vehicleData/${id}`);
 
         if(!response.ok){
             throw new Error('Failed to fetch data');
@@ -66,7 +66,7 @@ document.getElementById("updateForm").addEventListener('submit',(e)=>{
 
     const updatedVehicleData={pollutionUpto,registrationUpto,taxpaidUpto,insurancePaidUpto,fitUpto,permitvalidupto};
 
-    fetch(`/updateVehicle/${id}`,{
+    fetch(`https://vehicledocs360.onrender.com/updateVehicle/${id}`,{
         method:'POST',
         headers:{'Content-Type': 'application/json'},
         body:JSON.stringify(updatedVehicleData)
