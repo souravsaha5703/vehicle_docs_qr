@@ -13,7 +13,7 @@ const app=express();
 const PORT=7000;
 
 app.use(cors({
-    origin:["http://localhost:5173"],
+    origin:["http://vehicledocs360.onrender.com/"],
     methods:["POST","GET"],
     credentials:true
 }));
