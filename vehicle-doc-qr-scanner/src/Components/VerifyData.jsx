@@ -40,33 +40,33 @@ function VerifyData() {
   }
 
   return (
-    <div className='w-full h-screen flex items-center justify-center flex-col'>
+    <div className='w-full h-full flex items-center justify-center flex-col'>
       {!afterVerify ? (
         <div>
-          <h1 className='my-5 text-center font-sans text-4xl font-bold text-red-500'>Verify the details fetched from qr code</h1>
-      <div className="border border-gray-700 p-3 rounded-lg transform transition duration-500 w-[800px]">
+          <h1 className='my-5 text-center font-sans text-4xl font-bold text-red-500 max-sm:text-xl'>Verify the details fetched from qr code</h1>
+      <div className="border border-gray-700 p-3 rounded-lg transform transition duration-500 w-[800px] max-md:w-[600px] max-sm:w-[400px]">
         <div className="bg-slate-200 shadow-2xl relative rounded-lg p-7 w-full">
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Vehicle Reg no : {jsonData.vehicleNo}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Owner Name : {jsonData.ownerName}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Owner Phone : {jsonData.ownerPhone}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Engine No : {jsonData.engineNo}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Brand : {jsonData.brand}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Reg. State : {jsonData.regState}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Chassis Number : {jsonData.chasisNo}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Driver Name : {jsonData.driverName}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Driver Phone : {jsonData.driverPhone}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Driver Licence No : {jsonData.driverLicence}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Vehicle Reg Upto : {jsonData.regDate}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Tax paid Upto : {jsonData.taxpaidupto}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Insurance paid Upto : {jsonData.insuranceupto}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Pucc Valid Upto : {jsonData.pucvalid}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Fit Upto : {jsonData.fitupto}</h4>
-          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left">Permit Valid Upto : {jsonData.permitupto}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Vehicle Reg no : {jsonData.vehicleNo}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Owner Name : {jsonData.ownerName}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Owner Phone : {jsonData.ownerPhone}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Engine No : {jsonData.engineNo}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Brand : {jsonData.brand}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Reg. State : {jsonData.regState}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Chassis Number : {jsonData.chasisNo}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Driver Name : {jsonData.driverName}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Driver Phone : {jsonData.driverPhone}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Driver Licence No : {jsonData.driverLicence}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Vehicle Reg Upto : {jsonData.regDate}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Tax paid Upto : {jsonData.taxpaidupto}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Insurance paid Upto : {jsonData.insuranceupto}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Pucc Valid Upto : {jsonData.pucvalid}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Fit Upto : {jsonData.fitupto}</h4>
+          <h4 className="font-sans font-medium text-lg text-gray-950 capitalize text-left max-sm:text-base">Permit Valid Upto : {jsonData.permitupto}</h4>
         </div>
       </div>
       <button
         onClick={sendForVerification}
-       className="bg-green-600 hover:bg-green-800 text-white font-medium transition-all ease-linear duration-150 font-noto py-2 px-4 rounded-sm mt-6 text-2xl">Verify Details</button>
+       className="bg-green-600 hover:bg-green-800 text-white font-medium transition-all ease-linear duration-150 font-noto py-2 px-4 rounded-sm mt-6 text-2xl max-sm:text-lg mb-10 max-sm:ml-10">Verify Details</button>
         </div>
       ) : (
         <div className='w-full h-full flex items-center justify-center flex-col'>
