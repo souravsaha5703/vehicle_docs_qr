@@ -7,6 +7,7 @@ const router=require("./routes/index");
 const vehicleRouter=require("./routes/vehicles");
 const adminRouter=require("./routes/admin");
 const vehicleEntryDetailsRouter=require("./routes/vehicleEntryDetails");
+const guestRouter=require("./routes/guest");
 
 const app=express();
 
@@ -33,6 +34,7 @@ app.use("/",router);
 app.use("/",vehicleRouter);
 app.use("/",adminRouter);
 app.use("/",vehicleEntryDetailsRouter);
+app.use("/",guestRouter);
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 app.use(express.static(path.join(__dirname, 'public')));
