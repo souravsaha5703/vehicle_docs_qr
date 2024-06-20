@@ -68,7 +68,6 @@ router.post("/otpverification",async (req,res)=>{
         const user=await otpModel.findOne({AdminEmail:sessionEmail,otp:otpData});
         if(user){
             console.log("Admin Verified");
-            // let adminId=req.session.adminid;
             const activeAdmin=await adminModel.findOne({_id:req.session.adminid});
             
             const token=setUser(activeAdmin);
