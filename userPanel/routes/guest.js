@@ -156,4 +156,49 @@ router.get("/guestgetqr/:id",async (req,res)=>{
     }
 });
 
+router.post("/guestVerifyVehicleDetails",async (req,res)=>{
+    let verificationData =req.body;
+    try {
+        const findVehicleData=await guestVehicleModel.findOne({
+            ownerName:verificationData.ownerName,
+            ownerPhone:verificationData.ownerPhone,
+            vehicleNo:verificationData.vehicleNo,
+            engineNo:verificationData.engineNo,
+            brand:verificationData.brand,
+            reg_state:verificationData.regState,
+            chasisNo:verificationData.chasisNo,
+            driverName:verificationData.driverName,
+            driverPhone:verificationData.driverPhone,
+            driver_licence_no:verificationData.driverLicence,
+            reg_upto:verificationData.regDate,
+            taxPaidUpto:verificationData.taxpaidupto,
+            insurancePaidUpto:verificationData.insuranceupto,
+            pucValidUpto:verificationData.pucvalid,
+            fit_upto:verificationData.fitupto,
+            permitValidupto:verificationData.permitupto
+        });
+
+        if(findVehicleData){
+            res.json({verified:true});
+            console.log("vehicle verified");
+        }else{
+            res.json({verified:false});
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.post("/createGuestEntry",async (req,res)=>{
+    let {id}=req.body;
+    try {
+        const createEntry=new guestEntryModel({vehicleId:id});
+        await createEntry.save();
+        res.status(201).json({done:true});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({done:false});
+    }
+});
+
 module.exports=router;
