@@ -19,6 +19,11 @@ function QrScanner() {
         const data={details:result};
         navigate('/verifydata',{state:data});
     }
+
+    const handleGuestBtn=(e)=>{
+      e.preventDefault();
+      navigate('/guestqrscanner');
+    }
   
     return (
       <>
@@ -30,6 +35,9 @@ function QrScanner() {
             <img src={qrScannerPic} alt="Qr Code Scanner" className="w-52 h-44 object-cover rounded-sm" />
             <button className="bg-blue-400 hover:bg-blue-700 text-white font-semibold transition-all ease-linear duration-150 font-noto py-2 px-4 rounded-sm mt-6" onClick={handleClickBtn}>
               Click here to Scan a QR Code
+            </button>
+            <button className="bg-red-500 hover:bg-red-800 text-white font-semibold transition-all ease-linear duration-150 font-noto py-2 px-4 rounded-sm mt-6" onClick={handleGuestBtn}>
+              Click here to Scan as a Guest
             </button>
           </div>
           ) : (
