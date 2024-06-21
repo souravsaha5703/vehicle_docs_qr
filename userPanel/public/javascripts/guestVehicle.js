@@ -36,7 +36,7 @@ qrbtn.forEach((btn)=>{
 
 async function getData(id){
     try{
-        const response=await fetch(`http://localhost:7000/guestvehicleData/${id}`);
+        const response=await fetch(`https://vehicledocs360.onrender.com/guestvehicleData/${id}`);
 
         if(!response.ok){
             throw new Error('Failed to fetch data');
@@ -50,7 +50,7 @@ async function getData(id){
 
 async function getQr(id){
     try {
-        const response=await fetch(`http://localhost:7000/guestgetqr/${id}`);
+        const response=await fetch(`https://vehicledocs360.onrender.com/guestgetqr/${id}`);
         if(!response.ok){
             throw new Error('Failed to fetch data');
         }
