@@ -7,7 +7,7 @@ router.get('/createAdmin',async (req,res)=>{
     const adminDetails={
         username:"cocacolaadmin003",
         password:"cokeadmin@2003",
-        email:"techmintbangla003@gmail.com",
+        email:"vehicledoc360@gmail.com",
         compname:"Coca Cola"
     };
 

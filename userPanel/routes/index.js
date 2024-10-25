@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require("express");
 const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
+const {MailtrapClient} = require("mailtrap");
 const router = express.Router();
 const otpModel = require("../models/otpmodel");
 const adminModel=require("../models/adminModel");
@@ -9,11 +10,17 @@ const entriesModel=require('../models/entriesModel');
 const {setUser}=require("../service/authtoken");
 const {restrictedToLoggedInUserOnly}=require("../middlewares/auth");
 
-const mailerSend = new MailerSend({
-    apiKey: process.env.MAILERSEND_API_KEY,
-});
+// const mailerSend = new MailerSend({
+//     apiKey: process.env.MAILERSEND_API_KEY,
+// });
 
-const sentFrom = new Sender("info@trial-3z0vkloz7yx47qrx.mlsender.net", "Vehicle Docs 360");
+const TOKEN = process.env.MAILTRAP_API_TOKEN;
+
+// const sentFrom = new Sender("info@trial-3z0vkloz7yx47qrx.mlsender.net", "Vehicle Docs 360");
+
+const SENDER_EMAIL = "demomailtrap.com";
+const client = new MailtrapClient({token:TOKEN});
+const sender={name:"Mailtrap Test",email:SENDER_EMAIL};
 
 router.get("/", (req, res) => {
     res.render("login", { title: 'login' });
@@ -29,26 +36,34 @@ router.get("/verifyotp", async (req, res) => {
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     try {
-        const recipients = [new Recipient(data, "Recipient")];
+        client.send({
+            from:sender,
+            to:[{ email: data }],
+            subject: "OTP Verification Email for Administrator Login",
+            text: otp,
+        })
+        .then(console.log)
+        .catch(console.error);
+        // const recipients = [new Recipient(data, "Recipient")];
 
-        const personalization = [
-            {
-              email: data,
-              data: {
-                otp: otp,
-                name: "Admin"
-              },
-            }
-          ];
+        // const personalization = [
+        //     {
+        //       email: data,
+        //       data: {
+        //         otp: otp,
+        //         name: "Admin"
+        //       },
+        //     }
+        //   ];
 
-        const emailParams = new EmailParams()
-            .setFrom(sentFrom)
-            .setTo(recipients)
-            .setReplyTo(sentFrom)
-            .setSubject("OTP Verification Email for Administrator Login")
-            .setTemplateId('3vz9dlev9zp4kj50')
-            .setPersonalization(personalization);
-        await mailerSend.email.send(emailParams);
+        // const emailParams = new EmailParams()
+        //     .setFrom(sentFrom)
+        //     .setTo(recipients)
+        //     .setReplyTo(sentFrom)
+        //     .setSubject("OTP Verification Email for Administrator Login")
+        //     .setTemplateId('3vz9dlev9zp4kj50')
+        //     .setPersonalization(personalization);
+        // await mailerSend.email.send(emailParams);
 
         await otpModel.create({
             AdminEmail: data,
