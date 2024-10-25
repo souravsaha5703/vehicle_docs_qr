@@ -35,12 +35,13 @@ router.get("/verifyotp", async (req, res) => {
     console.log(data);
 
     const otp = Math.floor(100000 + Math.random() * 900000);
+    const otpintext= String(otp);
     try {
         client.send({
             from:sender,
             to:[{ email: data }],
             subject: "OTP Verification Email for Administrator Login",
-            text: otp,
+            text: otpintext,
         })
         .then(console.log)
         .catch(console.error);
