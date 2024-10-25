@@ -18,7 +18,7 @@ const TOKEN = process.env.MAILTRAP_API_TOKEN;
 
 // const sentFrom = new Sender("info@trial-3z0vkloz7yx47qrx.mlsender.net", "Vehicle Docs 360");
 
-const SENDER_EMAIL = "demomailtrap.com";
+const SENDER_EMAIL = "otp@demomailtrap.com";
 const client = new MailtrapClient({token:TOKEN});
 const sender={name:"Mailtrap Test",email:SENDER_EMAIL};
 
