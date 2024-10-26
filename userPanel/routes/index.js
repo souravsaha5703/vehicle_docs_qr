@@ -35,7 +35,6 @@ router.get("/verifyotp", async (req, res) => {
         client.send({
             from: sender,
             to: [{ email: data }],
-            subject: "OTP Verification Email for Administrator Login",
             template_uuid: "9513c79e-99bb-4b32-a9fb-b8be9695bb8f",
             template_variables: {
                 "name": "Admin",
