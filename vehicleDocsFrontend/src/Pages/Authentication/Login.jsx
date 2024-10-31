@@ -37,7 +37,8 @@ function Login() {
                     console.log(res.data.response);
                     setLoading(false);
                     setError(false);
-                    navigate('/verifyotp')
+                    let dataToSend = { adminEmail: res.data.response.admin_email }
+                    navigate('/verifyotp', { state: dataToSend });
                 })
                 .catch(error => {
                     setError(true);
@@ -64,7 +65,7 @@ function Login() {
                         value={username}
                         autoComplete="off"
                         required
-                        className="border-slate-600 rounded-md h-12 px-4 mb-4 outline-none font-noto font-normal text-slate-200 text-sm"
+                        className="border-slate-600 rounded-md h-12 px-4 mb-4 outline-none font-noto font-medium text-slate-200 text-base"
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <Input
@@ -73,7 +74,7 @@ function Login() {
                         value={password}
                         autoComplete="off"
                         required
-                        className="border-slate-600 rounded-md h-12 px-4 outline-none font-noto font-normal text-slate-200 text-sm"
+                        className="border-slate-600 rounded-md h-12 px-4 outline-none font-noto font-medium text-slate-200 text-base"
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <Button
@@ -81,7 +82,7 @@ function Login() {
                         size="lg"
                         onClick={handleLogin}>
                         {loading ? (
-                            <Loader/>
+                            <Loader />
                         ) : (
                             "Get OTP"
                         )}
