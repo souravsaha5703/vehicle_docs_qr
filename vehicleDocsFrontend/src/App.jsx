@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { setLoggedIn } = useContext(AppContext);
+  const { setLoggedIn, setAdmin } = useContext(AppContext);
 
   const token = localStorage.getItem('token');
 
@@ -20,6 +20,7 @@ function App() {
       })
         .then(res => {
           setLoggedIn(true);
+          setAdmin(res.data.user);
           console.log(res.data.message);
           setTimeout(() => {
             setLoading(false)
