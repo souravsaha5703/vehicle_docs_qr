@@ -27,7 +27,7 @@ function Navbar() {
                 </div>
             </nav>
 
-            <div className={`${!toggleSidebar ? "-translate-x-full" : "translate-x-0"} fixed top-0 left-0 z-50 w-48 h-screen shadow-2xl shadow-slate-200/5 transition-all duration-300`}>
+            <div className={`${!toggleSidebar ? "-translate-x-full" : "translate-x-0"} fixed top-0 left-0 z-50 w-60 h-screen shadow-2xl shadow-slate-200/5 transition-all duration-300`}>
                 <div className="h-full px-3 py-4 overflow-y-auto bg-slate-950 w-full flex flex-col items-center justify-start relative">
                     <h1 className="text-slate-50 text-2xl my-5 font-oswald font-semibold text-center">Vehicle Docs 360</h1>
                     <img src="../images/vehicle docs logo.png" alt="profile image" className="size-12 bg-cover bg-center" />
@@ -44,18 +44,20 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <a href="/allvehicles"
+                            <NavLink to={'/admin/add_vehicles'}
+                                onClick={() => setToggleSidebar(false)}
                                 className="flex items-center p-3 text-slate-50 rounded-lg hover:bg-slate-100 hover:text-slate-950 group">
                                 <IoDocumentTextOutline className='text-2xl text-teal-500' />
                                 <span className="ms-3 capitalize text-base">Vehicle Docs</span>
-                            </a>
+                            </NavLink>
                         </li>
                         <li>
-                            <a href="/add_vehicles"
+                            <NavLink to={'/admin/add_vehicles'}
+                                onClick={() => setToggleSidebar(false)}
                                 className="flex items-center p-3 text-slate-50 rounded-lg hover:bg-slate-100 hover:text-slate-950 group">
                                 <FaTruck className='text-2xl text-lime-500' />
                                 <span className="flex-1 ms-3 whitespace-nowrap capitalize text-base">Add Vehicle</span>
-                            </a>
+                            </NavLink>
                         </li>
                         <li>
                             <a href="/update_vehicles"
