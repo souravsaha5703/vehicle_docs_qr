@@ -4,6 +4,19 @@ import axios from 'axios';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Loader from '@/components/Loader/Loader';
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Label } from "@/components/ui/label";
+import { useNavigate } from 'react-router-dom';
+
 
 function AddVehicles() {
     const [vehicleNo, setVehicleNo] = useState('');
@@ -11,9 +24,26 @@ function AddVehicles() {
     const [searchError, setSearchError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [searchLoading, setSearchLoading] = useState(false);
+    const [submitLoading, setSubmitLoading] = useState(false);
     const [showResult, setShowResult] = useState(false);
+    const [categoryError, setCategoryError] = useState(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [phoneValid, setPhoneValid] = useState(true);
+    const [licenceValid, setLicenceValid] = useState(true);
+    const [validError, setValidError] = useState(false);
+    const [additionalInfo, setAdditionalInfo] = useState({
+        ownerName: '',
+        ownerPhone: '',
+        driverName: '',
+        driverLicence: ''
+    });
+
+    const navigate = useNavigate();
 
     const token = localStorage.getItem('token');
+
+    const phoneRegex = /^[6-9]\d{9}$/;
+    const licenseRegex = /^[A-Z]{2}[0-9]{2}[0-9]{4}[0-9]{7}$/;
 
     const handleVehicleSearch = (e) => {
         e.preventDefault();
@@ -43,14 +73,67 @@ function AddVehicles() {
 
     const handleProceed = (e) => {
         e.preventDefault();
-        let approveCategory = ["MGV","HGMV","HTV","Trailer","HGV","LMV"];
+        let approveCategory = ["MGV", "HGMV", "HTV", "Trailer", "HGV", "LMV"];
 
         let checkCategory = approveCategory.some(category => vehicleData.detail.vehicleCategory.includes(category));
+        if (checkCategory) {
+            setIsDrawerOpen(true);
+            setCategoryError(false);
+        } else {
+            setCategoryError(true);
+        }
+    }
 
-        if(checkCategory){
-            alert("Vehicle Reg okk")
-        }else{
-            alert("Vehicle Category not supported");
+    const checkPhone = (e) => {
+        setPhoneValid(phoneRegex.test(e.target.value));
+        setAdditionalInfo({ ...additionalInfo, ownerPhone: e.target.value });
+    }
+
+    const checkLicence = (e) => {
+        setLicenceValid(licenseRegex.test(e.target.value));
+        setAdditionalInfo({ ...additionalInfo, driverLicence: e.target.value });
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!phoneValid || !licenceValid) {
+            setValidError(true);
+        } else {
+            setValidError(false);
+            setSubmitLoading(true);
+            try {
+                axios.post("http://localhost:7000/addVehicleDetails", {
+                    ownerName: additionalInfo.ownerName,
+                    ownerPhone: additionalInfo.ownerPhone,
+                    vehicleNo: vehicleData.detail.registrationNumber,
+                    engineNo: vehicleData.detail.engineNo,
+                    driverName: additionalInfo.driverName,
+                    driverLicence: additionalInfo.driverLicence,
+                    chasisNo: vehicleData.detail.chassisNoFull,
+                    permitvalidUpto: vehicleData.detail.permit_valid_upto,
+                    registrationAt: vehicleData.detail.registeredAt,
+                    taxpaidUpto: vehicleData.detail.taxUpTo,
+                    insurancepaidUpto: vehicleData.detail.insuranceUpTo,
+                    pollutionUpto: vehicleData.detail.pucUpTo,
+                    fitUpto: vehicleData.detail.fitnessUpTo
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    withCredentials: true
+                })
+                    .then(res => {
+                        setSubmitLoading(false);
+                        navigate("/admin/dashboard");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        setSubmitLoading(false);
+                        alert("Something Went Wrong");
+                    })
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
     return (
@@ -119,9 +202,14 @@ function AddVehicles() {
                                                 </h4>
                                                 <div className='flex w-full mt-5 gap-3 items-center justify-center'>
                                                     <Button size="lg" className="font-noto text-base font-medium"
-                                                    onClick={handleProceed} >Proceed</Button>
+                                                        onClick={handleProceed} >Proceed</Button>
                                                     <Button size="lg" className="font-noto text-base font-medium" variant="destructive">Cancel</Button>
                                                 </div>
+                                                {categoryError ? (
+                                                    <h3 className='text-center mt-3 font-noto text-red-600 text-base font-normal'>Vehicle category not supported</h3>
+                                                ) : (
+                                                    <></>
+                                                )}
                                             </div>
                                         </div>
                                     )}
@@ -129,6 +217,87 @@ function AddVehicles() {
                             )}
                         </div>
                     )}
+                    <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} >
+                        <DrawerContent className='flex flex-col items-center justify-center bg-slate-950 border-none'>
+                            <DrawerHeader className='w-full flex flex-col items-center justify-center'>
+                                <DrawerTitle className='text-2xl font-noto text-slate-100 underline text-center font-semibold'>Additional Information</DrawerTitle>
+                                <DrawerDescription className='text-xl font-noto text-slate-500 text-center font-normal'>Provide some additional details to add this vehicle into our system</DrawerDescription>
+                            </DrawerHeader>
+                            <form className='flex flex-col gap-2'>
+                                <div className='flex gap-5'>
+                                    <div>
+                                        <Label htmlFor="ownerName" className="text-base font-noto font-normal text-slate-100">Vehicle Owner Name</Label>
+                                        <Input
+                                            type="text"
+                                            placeholder="Enter Owner Name"
+                                            value={additionalInfo.ownerName}
+                                            onChange={(e) => setAdditionalInfo({ ...additionalInfo, ownerName: e.target.value })}
+                                            className="mt-1 w-64 h-10 font-noto text-base font-normal capitalize text-slate-100"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label htmlFor="ownerPhone" className="text-base font-noto font-normal text-slate-100">Vehicle Owner Phone No</Label>
+                                        <Input
+                                            type="text"
+                                            placeholder="Enter Owner Phone No"
+                                            value={additionalInfo.ownerPhone}
+                                            onChange={checkPhone}
+                                            maxLength="10"
+                                            className="mt-1 w-64 h-10 font-noto text-base font-normal capitalize text-slate-100"
+                                        />
+                                    </div>
+                                </div>
+                                <div className='flex gap-5 mt-5'>
+                                    <div>
+                                        <Label htmlFor="driverName" className="text-base font-noto font-normal text-slate-100">Driver Name</Label>
+                                        <Input
+                                            type="text"
+                                            placeholder="Enter Driver Name"
+                                            value={additionalInfo.driverName}
+                                            onChange={(e) => setAdditionalInfo({ ...additionalInfo, driverName: e.target.value })}
+                                            className="mt-1 w-64 h-10 font-noto text-base font-normal capitalize text-slate-100"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label htmlFor="driverLicence" className="text-base font-noto font-normal text-slate-100">Driver Licence No</Label>
+                                        <Input
+                                            type="text"
+                                            placeholder="Enter Driver Licence No"
+                                            value={additionalInfo.driverLicence}
+                                            onChange={checkLicence}
+                                            className="mt-1 w-64 h-10 font-noto text-base font-normal capitalize text-slate-100"
+                                        />
+                                    </div>
+                                </div>
+                                {validError ? (
+                                    <h3 className='text-center mt-3 font-noto text-red-600 text-base font-normal'>
+                                        {!phoneValid && !licenceValid ? (
+                                            "Phone and Licence no is invalid"
+                                        ) : !phoneValid ? (
+                                            "Phone no is invalid"
+                                        ) : !licenceValid ? (
+                                            "Licence No is invalid"
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </h3>
+                                ) : (
+                                    <></>
+                                )}
+                                <Button onClick={handleSubmit} className="mt-4 font-noto font-normal text-base" size="lg">
+                                    {submitLoading ? (
+                                        <Loader />
+                                    ) : (
+                                        "Add Vehicle"
+                                    )}</Button>
+                            </form>
+                            <DrawerFooter>
+                                <DrawerClose>
+                                    <Button variant="outline" size="lg">Cancel</Button>
+                                </DrawerClose>
+                            </DrawerFooter>
+                        </DrawerContent>
+                    </Drawer>
                 </div>
             </div>
         </>
