@@ -11,64 +11,57 @@ const { restrictedToLoggedInUserOnly } = require("../middlewares/auth");
 
 const TOKEN = process.env.MAILTRAP_API_TOKEN;
 
-const SENDER_EMAIL = "otp@demomailtrap.com";
+const SENDER_EMAIL = process.env.SENDER_MAIL_ID;
 
 const client = new MailtrapClient({ token: TOKEN });
 
 const sender = { name: "Vehicle Doc 360", email: SENDER_EMAIL };
 
 router.get("/", (req, res) => {
-    res.render("login", { title: 'login' });
+    res.render("Welcome");
 });
 
-router.get("/signup", (req, res) => {
-    res.render("signup", { title: "signup" });
-});
-
-router.get("/verifyotp", async (req, res) => {
-    let data = req.session.adminEmail;
-    console.log(data);
+router.post("/sendotp", async (req, res) => {
+    let { adminEmail } = req.body;
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     const otpintext = String(otp);
     try {
         client.send({
             from: sender,
-            to: [{ email: data }],
+            to: [{ email: adminEmail }],
             template_uuid: "9513c79e-99bb-4b32-a9fb-b8be9695bb8f",
             template_variables: {
                 "name": "Admin",
                 "otp": otpintext
             }
         })
-        .then(console.log)
-        .catch(console.error);
+            .then(console.log)
+            .catch(console.error);
 
         await otpModel.create({
-            AdminEmail: data,
+            AdminEmail: adminEmail,
             otp: otp
         });
 
-        res.render("verifyotp", { title: "Verify otp" });
+        res.status(201).json({ status: 201, message: "OTP sent successfully" });
     } catch (error) {
         console.error(error);
     }
 });
 
 router.post("/otpverification", async (req, res) => {
-    const otpData = req.body.otp;
-    const sessionEmail = req.session.adminEmail;
+    const { otp, email } = req.body;
     try {
-        const user = await otpModel.findOne({ AdminEmail: sessionEmail, otp: otpData });
+        const user = await otpModel.findOne({ AdminEmail: email, otp: otp });
         if (user) {
             console.log("Admin Verified");
-            const activeAdmin = await adminModel.findOne({ _id: req.session.adminid });
-
+            const activeAdmin = await adminModel.findOne({ admin_email: email });
             const token = setUser(activeAdmin);
             res.cookie("uid", token);
-            res.json({ verified: true });
+            res.status(201).json({ status: 201, token: token, response: activeAdmin, message: "OTP valid and Admin login succesfull" });
         } else {
-            res.json({ verified: false });
+            res.status(400).json({ status: 400, message: "Invalid OTP" });
         }
     } catch (error) {
         console.error(error);
@@ -76,12 +69,11 @@ router.post("/otpverification", async (req, res) => {
     }
 });
 
+router.get("/getAdmin", restrictedToLoggedInUserOnly, async (req, res) => {
+    res.json({ verified: true, user: req.user, message: "Token Verified" });
+});
+
 router.get("/dashboard", restrictedToLoggedInUserOnly, async (req, res) => {
-    if (!req.user) return res.redirect("/")
-    let admin = {
-        username: req.user.username,
-        email: req.user.email
-    };
     const allEntries = await entriesModel.find({});
     const arrayIds = [];
     for (let i = 0; i < allEntries.length; i++) {
@@ -105,73 +97,15 @@ router.get("/dashboard", restrictedToLoggedInUserOnly, async (req, res) => {
                     console.log("No document found for ID:");
                 }
             }
-            const today = new Date().toISOString().split('T')[0];
-            const todaysData = [];
-            for (let data of allEntryData) {
-                if (data.time.toISOString().split('T')[0] == today) {
-                    todaysData.push({ ...data })
-                }
-            }
             if (allEntryData.length > 0) {
-                res.render("dashboard", { admin, entryData: allEntryData, status: true, newData: todaysData });
+                res.status(201).json({ status: 201, response: allEntryData });
             } else {
-                res.render("dashboard", { admin, status: false });
+                res.status(400).json({ status: 400, message: "NO ENTRY FOUND" });
             }
         })
         .catch(err => {
             console.error(err);
         });
-});
-
-router.get("/allVehicles", restrictedToLoggedInUserOnly, async (req, res) => {
-    if (!req.user) return res.redirect("/")
-    let admin = {
-        username: req.user.username,
-        email: req.user.email
-    };
-    let status;
-    const allVehicle = await vehicleModel.find({});
-    if (allVehicle) {
-        status = true
-        res.render("allVehicles", { admin, status: status, vehicleData: allVehicle });
-    } else {
-        status = false
-        res.render("allVehicles", { admin, status: status, vehicleData: "No vehicle added" });
-    }
-});
-
-router.get("/add_vehicles", restrictedToLoggedInUserOnly, async (req, res) => {
-    if (!req.user) return res.redirect("/")
-    let admin = {
-        username: req.user.username,
-        email: req.user.email
-    };
-
-    res.render("addVehicles", { admin });
-});
-
-router.get("/update_vehicles", restrictedToLoggedInUserOnly, async (req, res) => {
-    if (!req.user) return res.redirect("/")
-    let admin = {
-        username: req.user.username,
-        email: req.user.email
-    };
-    let status;
-    const allVehicleforUpdate = await vehicleModel.find({});
-    if (allVehicleforUpdate) {
-        status = true
-        res.render("updateVehicle", { admin, status: status, vehicleData: allVehicleforUpdate });
-    } else {
-        status = false
-        res.render("updateVehicle", { admin, status: status, vehicleData: "No vehicle available" });
-    }
-});
-
-router.get("/errorOccured", (req, res) => {
-    let data = {
-        message: req.query.message
-    }
-    res.render("errorPage", data);
 });
 
 module.exports = router;

@@ -28,13 +28,6 @@ const vehicleSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
-    brand:{
-        type:String
-    },
-    reg_state:{
-        type:String,
-        required:true
-    },
     chasisNo:{
         type:String,
         required:true,
@@ -44,16 +37,12 @@ const vehicleSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    driverPhone:{
-        type:String,
-        required:true
-    },
     driver_licence_no:{
         type:String,
         required:true,
         unique:true
     },
-    reg_upto:{
+    reg_at:{
         type:Date,
         required:true
     },
@@ -67,7 +56,6 @@ const vehicleSchema=new mongoose.Schema({
     },
     pucValidUpto:{
         type:Date,
-        required:true
     },
     fit_upto:{
         type:Date,
@@ -75,7 +63,6 @@ const vehicleSchema=new mongoose.Schema({
     },
     permitValidupto:{
         type:Date,
-        required:true
     }
 });
 
