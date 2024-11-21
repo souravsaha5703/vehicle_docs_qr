@@ -3,17 +3,34 @@ import { AppContext } from '@/Context/AppContextProvider';
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { FaTruck } from "react-icons/fa6";
-import { GrUpdate } from "react-icons/gr";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdOutlineLogout } from "react-icons/md";
 import { NavLink } from 'react-router-dom';
+import { Button } from '../ui/button';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const [toggleSidebar, setToggleSidebar] = useState(false);
     const { admin } = useContext(AppContext);
 
+    const navigate = useNavigate();
+
     const handleToggle = () => {
         setToggleSidebar(!toggleSidebar);
+    }
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        try {
+            axios.get("http://localhost:7000/adminLogout")
+                .then(res => {
+                    localStorage.removeItem('token');
+                    navigate("/");
+                })
+        } catch (error) {
+            console.error(error);
+        }
     }
     return (
         <>
@@ -44,7 +61,7 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={'/admin/add_vehicles'}
+                            <NavLink to={'/admin/vehicle_details'}
                                 onClick={() => setToggleSidebar(false)}
                                 className="flex items-center p-3 text-slate-50 rounded-lg hover:bg-slate-100 hover:text-slate-950 group">
                                 <IoDocumentTextOutline className='text-2xl text-teal-500' />
@@ -59,15 +76,8 @@ function Navbar() {
                                 <span className="flex-1 ms-3 whitespace-nowrap capitalize text-base">Add Vehicle</span>
                             </NavLink>
                         </li>
-                        <li>
-                            <a href="/update_vehicles"
-                                className="flex items-center p-3 text-slate-50 rounded-lg hover:bg-white hover:text-slate-950 group">
-                                <GrUpdate className='text-2xl text-emerald-500' />
-                                <span className="flex-1 ms-3 whitespace-nowrap capitalize text-base">Update docs</span>
-                            </a>
-                        </li>
                     </ul>
-                    <a href="/adminLogout" className="flex items-center gap-1 absolute bottom-5 left-5 cursor-pointer"><MdOutlineLogout className='text-2xl text-red-500' /><h5 className="text-red-500 text-xl font-noto font-normal">Logout</h5></a>
+                    <Button onClick={handleLogout} className="flex items-center gap-1 absolute bottom-5 left-5 cursor-pointer bg-transparent border-none hover:bg-slate-50"><MdOutlineLogout className='text-2xl text-red-600' /><h5 className="text-red-600 text-xl font-noto font-normal">Logout</h5></Button>
                 </div>
             </div>
         </>
