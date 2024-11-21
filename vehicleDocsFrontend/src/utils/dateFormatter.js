@@ -5,6 +5,7 @@ export const formatToIndianTime = (dateString) => {
         weekday: 'short', // 'Tue'
         day: '2-digit',   // '14'
         month: 'short',   // 'May'
+        year: 'numeric',  // '2024'
         hour: '2-digit',  // '6'
         minute: '2-digit', // '05'
         hour12: true,     // 'PM' or 'AM'
