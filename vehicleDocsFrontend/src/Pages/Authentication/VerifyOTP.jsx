@@ -28,7 +28,7 @@ function VerifyOTP() {
 
   useEffect(() => {
     try {
-      axios.post("http://localhost:7000/sendotp", {
+      axios.post("https://vehicledocs360.onrender.com/sendotp", {
         adminEmail: adminEmail
       }, {
         withCredentials: true
@@ -47,7 +47,7 @@ function VerifyOTP() {
   const handleSubmit = () => {
     setLoading(true);
     try {
-      axios.post("http://localhost:7000/otpverification", {
+      axios.post("https://vehicledocs360.onrender.com/otpverification", {
         otp: otp,
         email: adminEmail
       }, {
@@ -76,7 +76,7 @@ function VerifyOTP() {
     e.preventDefault();
     setResendLoading(true);
     try {
-      axios.post("http://localhost:7000/sendotp", {
+      axios.post("https://vehicledocs360.onrender.com/sendotp", {
         adminEmail: adminEmail
       }, {
         withCredentials: true

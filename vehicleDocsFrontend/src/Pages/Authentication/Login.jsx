@@ -27,7 +27,7 @@ function Login() {
         e.preventDefault();
         setLoading(true);
         try {
-            axios.post("http://localhost:7000/adminLogin", {
+            axios.post("https://vehicledocs360.onrender.com/adminLogin", {
                 username: username,
                 password: password
             }, {

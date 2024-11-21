@@ -14,7 +14,7 @@ function Dashboard() {
   const today = new Date();
 
   useEffect(() => {
-    axios.get("http://localhost:7000/dashboard", {
+    axios.get("https://vehicledocs360.onrender.com/dashboard", {
       headers: {
         Authorization: `Bearer ${token}`
       }

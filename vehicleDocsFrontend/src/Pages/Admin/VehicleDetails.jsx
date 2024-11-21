@@ -33,7 +33,7 @@ function VehicleDetails() {
 
     useEffect(() => {
         try {
-            axios.get("http://localhost:7000/allVehiclesData", {
+            axios.get("https://vehicledocs360.onrender.com/allVehiclesData", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -56,7 +56,7 @@ function VehicleDetails() {
     const handleDetailsBtn = (vehicleId) => {
         let id = vehicleId;
         try {
-            axios.get(`http://localhost:7000/vehicleData/${id}`, {
+            axios.get(`https://vehicledocs360.onrender.com/vehicleData/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -75,7 +75,7 @@ function VehicleDetails() {
     const handleQRBtn = (vehicleId) => {
         let id = vehicleId;
         try {
-            axios.get(`http://localhost:7000/getqr/${id}`, {
+            axios.get(`https://vehicledocs360.onrender.com/getqr/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },

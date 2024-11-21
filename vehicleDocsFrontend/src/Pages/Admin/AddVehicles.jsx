@@ -50,7 +50,7 @@ function AddVehicles() {
         setShowResult(true);
         setSearchLoading(true);
         try {
-            axios.get(`http://localhost:7000/searchVehicles/${vehicleNo}`, {
+            axios.get(`https://vehicledocs360.onrender.com/searchVehicles/${vehicleNo}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -102,7 +102,7 @@ function AddVehicles() {
             setValidError(false);
             setSubmitLoading(true);
             try {
-                axios.post("http://localhost:7000/addVehicleDetails", {
+                axios.post("https://vehicledocs360.onrender.com/addVehicleDetails", {
                     ownerName: additionalInfo.ownerName,
                     ownerPhone: additionalInfo.ownerPhone,
                     vehicleNo: vehicleData.detail.registrationNumber,

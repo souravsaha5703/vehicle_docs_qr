@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     try {
-      axios.get("http://localhost:7000/getAdmin", {
+      axios.get("https://vehicledocs360.onrender.com/getAdmin", {
         headers: {
           Authorization: `Bearer ${token}`
         }

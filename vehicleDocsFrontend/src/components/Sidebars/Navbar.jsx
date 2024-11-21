@@ -23,7 +23,7 @@ function Navbar() {
     const handleLogout = (e) => {
         e.preventDefault();
         try {
-            axios.get("http://localhost:7000/adminLogout")
+            axios.get("https://vehicledocs360.onrender.com/adminLogout")
                 .then(res => {
                     localStorage.removeItem('token');
                     navigate("/");
