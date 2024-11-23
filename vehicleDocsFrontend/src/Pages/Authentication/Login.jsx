@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
     Card,
     CardContent,
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import axios from 'axios';
 import Loader from '@/components/Loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '@/Context/AppContextProvider';
 
 
 function Login() {
@@ -20,6 +21,8 @@ function Login() {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [guestLoading, setGuestLoading] = useState(false);
+    const { setAdmin, setLoggedIn } = useContext(AppContext);
 
     const navigate = useNavigate();
 
@@ -34,7 +37,6 @@ function Login() {
                 withCredentials: true
             })
                 .then(res => {
-                    console.log(res.data.response);
                     setLoading(false);
                     setError(false);
                     let dataToSend = { adminEmail: res.data.response.admin_email }
@@ -45,6 +47,30 @@ function Login() {
                     setLoading(false);
                     setErrorMessage(error.response.data.message);
                     console.log(error.response.data.message);
+                })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleGuestLogin = (e) => {
+        e.preventDefault();
+        setGuestLoading(true);
+        try {
+            axios.post("http://localhost:7000/guestLogin", {
+                withCredentials: true
+            })
+                .then(res => {
+                    setGuestLoading(false);
+                    setAdmin(res.data.response);
+                    setLoggedIn(true);
+                    localStorage.setItem("token", res.data.token);
+                    navigate('/admin/dashboard');
+                })
+                .catch(err => {
+                    setGuestLoading(false);
+                    setLoggedIn(false);
+                    alert("Error in Guest login");
                 })
         } catch (error) {
             console.error(error);
@@ -89,7 +115,13 @@ function Login() {
                     </Button>
                 </CardContent>
                 <CardFooter className="flex flex-col">
-                    <a href="/guestlogin" className="font-noto text-blue-50 font-light text-lg transition-all ease-in-out duration-150 hover:text-blue-400 text-center">Login as Guest</a>
+                    {guestLoading ? (
+                        <div className='w-full flex items-center justify-center'>
+                            <Loader />
+                        </div>
+                    ) : (
+                        <Button variant="link" onClick={handleGuestLogin} className="font-noto text-blue-50 font-light text-lg transition-all ease-in-out duration-150 hover:text-blue-400 text-center">Login as Guest</Button>
+                    )}
                     {error && <p className="font-noto text-red-500 text-base text-center font-normal transition-all ease-in duration-200 mt-2">{errorMessage}</p>}
                 </CardFooter>
             </Card>
