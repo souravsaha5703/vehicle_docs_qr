@@ -78,7 +78,7 @@ function Login() {
     }
 
     return (
-        <div className="bg-hero bg-repeat w-full h-screen flex justify-center items-center bg-slate-950">
+        <div className="bg-hero bg-repeat w-full h-screen flex justify-center items-center bg-slate-900">
             <Card className="w-96 bg-slate-950 rounded-xl text-center flex flex-col items-center justify-center p-5 overflow-hidden border-none transition-all ease-in duration-200">
                 <CardHeader>
                     <CardTitle className="text-slate-100 text-3xl font-noto text-center font-semibold">Admin Login</CardTitle>
