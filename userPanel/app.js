@@ -13,7 +13,7 @@ const app=express();
 const PORT=7000;
 
 app.use(cors({
-    origin:["https://vehicledocs360scanner.vercel.app","http://localhost:7000","http://localhost:5173","https://vehicledocs360.vercel.app/"],
+    origin:["https://vehicledocs360scanner.vercel.app","http://localhost:7000","http://localhost:5173","https://vehicledocs360web.vercel.app/"],
     methods:["POST","GET"],
     credentials:true
 }));
