@@ -4,26 +4,20 @@ const bcrypt = require('bcrypt');
 const adminModel = require('../models/adminModel');
 const router = express.Router();
 
-router.get('/createAdmin', async (req, res) => {
-    const adminDetails = {
-        username: process.env.USERNAME,
-        password: process.env.PASSWORD,
-        email: "vehicledoc360@gmail.com",
-        compname: "Coca Cola"
-    };
+router.post('/createAdmin', async (req, res) => {
 
     const saltRounds = 10;
-    const hashPassword = await bcrypt.hash(adminDetails.password, saltRounds);
+    const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
 
     try {
         const newAdmin = await adminModel.create({
-            username: adminDetails.username,
+            username: req.body.username,
             password: hashPassword,
-            admin_email: adminDetails.email,
-            company_name: adminDetails.compname
+            admin_email: req.body.email,
+            company_name: req.body.compname
         });
 
-        res.send(newAdmin);
+        res.status(201).json({ status: 201, response: newAdmin });
     } catch (error) {
         console.error(error);
     }

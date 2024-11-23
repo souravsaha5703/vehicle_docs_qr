@@ -57,7 +57,7 @@ router.post("/otpverification", async (req, res) => {
         if (user) {
             console.log("Admin Verified");
             const activeAdmin = await adminModel.findOne({ admin_email: email });
-            const token = setUser(activeAdmin);
+            let token = setUser(activeAdmin);
             res.cookie("uid", token);
             res.status(201).json({ status: 201, token: token, response: activeAdmin, message: "OTP valid and Admin login succesfull" });
         } else {
@@ -107,5 +107,17 @@ router.get("/dashboard", restrictedToLoggedInUserOnly, async (req, res) => {
             console.error(err);
         });
 });
+
+router.post("/guestLogin", async (req, res) => {
+    try {
+        const guestAdmin = await adminModel.find({});
+        let token = setUser(guestAdmin[0]);
+        res.cookie("uid", token);
+        res.status(201).json({ status: 201, token: token, response: guestAdmin[0], message: "Guest Login Successfull" });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ status: 400, message: "Error in Guest Login" });
+    }
+})
 
 module.exports = router;
