@@ -55,6 +55,7 @@ function VehicleDetails() {
 
     const handleDetailsBtn = (vehicleId) => {
         let id = vehicleId;
+        setDialogLoading(true);
         try {
             axios.get(`https://vehicledocs360.onrender.com/vehicleData/${id}`, {
                 headers: {
@@ -74,6 +75,7 @@ function VehicleDetails() {
 
     const handleQRBtn = (vehicleId) => {
         let id = vehicleId;
+        setQrDialogLoading(true);
         try {
             axios.get(`https://vehicledocs360.onrender.com/getqr/${id}`, {
                 headers: {
