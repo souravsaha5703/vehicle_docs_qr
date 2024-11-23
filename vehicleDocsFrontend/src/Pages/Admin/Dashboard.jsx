@@ -19,9 +19,22 @@ function Dashboard() {
         Authorization: `Bearer ${token}`
       }
     }).then(res => {
-      setAllEntries(res.data.response);
+      let sortedData = res.data.response.sort((a, b) => {
+        return new Date(b.time) - new Date(a.time);
+      });
+      setAllEntries(sortedData);
       let entries = res.data.response;
-      let matchingDates = entries.filter(date => date.time == today);
+      let matchingDates = entries.filter(date => {
+        let givenDate = new Date(date.time);
+
+        let givenYear = givenDate.getFullYear();
+        let givenMonth = givenDate.getMonth();
+        let givenDay = givenDate.getDate();
+
+        return (
+          givenYear === today.getFullYear() && givenMonth === today.getMonth() && givenDay === today.getDate()
+        )
+      });
       setTodaysEntries(matchingDates);
       setDataLoading(false);
     }).catch(err => {
