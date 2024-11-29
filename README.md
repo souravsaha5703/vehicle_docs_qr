@@ -1,23 +1,70 @@
-Vehicle Doc 360 is a web application designed to revolutionize vehicle entry management at factories. It eliminates the need of manual record keeping by gate personnel, replacing it with a swift and efficient QR Code base system. 
 
-Vehicle Details Management:-
+# Vehicle Docs 360
 
-Step 1:- First the factory admin have to login himself in the portal by using username and password.
+Vehicle Doc 360 is a web application designed to revolutionize vehicle entry management at factories. It eliminates the need of manual record keeping by gate personnel, replacing it with a swift and efficient QR Code base system.
 
-Step 2:- Then we send an otp to that admin email id by using mailersend SMTP server. Admin have to input that otp to login within 5 minutes because after 5 minutes that otp will expire.
 
-Step 3:- After Login admin will be redirected to dashboard and have multiple operations to perform like add vehicle, update vehicle and can also see how many vehicles are already registered to the portal.
 
-Step 4:- To register a new vehicle admin have to go to Add Vehicle option and a html form will appear. In that form the admin have to input details like vehicle owner name, vehicle owner phone no, vehicle no, engine no, brand, vehicle registered state, driver name, driver phone no, driver license no, chasis no, vehicle registered upto, tax paid upto, insurance paid upto, pollution certificate valid upto, vehicle fitness certificate valid upto and vehicle permit valid upto. And then that vehicle data will be stored to the database.
+[![vehicle-docs-logo.png](https://i.postimg.cc/4yMqbwLW/vehicle-docs-logo.png)](https://postimg.cc/hQL2K8qm)
 
-Step 5:- After that a QR code will automatically generate for that particular vehicle which contains all the details of that vehicle. And the admin will give that qr code to the vehicle owner or the driver.
 
-Scanning the QR Code:-
+## Features
 
-Step 1:- When the truck will arrive at the factory the driver will show that qr code which was given by the admin to the gateman.
+1. Centralized Vehicle Management
 
-Step 2:- The gateman then scan that qr code and fetched the data from that qr code.
+- Seamlessly manage all registered vehicles from a single platform.
+- Efficient tracking and record-keeping for every vehicle entry.
 
-Step 3:- Then that data will be sent for verification and if the data verified successfully it will show verified and that truck will be granted access. If not then the driver or the vehicle owner have to be update the details in the portal by the help of admin or retry again with valid details.
+2. Elimination of Manual Records
+- Say goodbye to manual logs. The system automatically records vehicle entries, reducing errors and saving time.
 
-Step 4:- After verification that vehicle no, owner name, driver license no and the time of entry will be stored successfully and will be displayed to the admin dashboard.
+3. Comprehensive Entry Details
+- Instantly access detailed records for each entry, including:
+   - Vehicle Number
+   - Vehicle Owner Name
+   - Driver Details
+   - Entry Time
+
+4. Unique QR Code for Each Vehicle
+- Every vehicle is assigned a unique QR code.
+- Simplifies identification and ensures secure access.
+
+5. Automated Data Integration
+- Vehicle details are fetched via APIs and securely stored in the database.
+- Eliminates the need for manual registration processes.
+
+6. Effortless Entry with QR Code Scanning
+- Gatekeepers simply scan the vehicle's QR code for instant entry.
+- Speeds up the entry process and ensures accuracy.
+
+
+## Tech Stack
+
+**Client:** React, TailwindCSS
+
+**Server:** Node, Express
+
+**Database:** MongoDB
+
+**Other Services and libraries:** Mailtrap, qrcode, @yudiel/react-qr-scanner
+
+
+
+## Screenshots
+
+[![Screenshot-2024-11-29-134957.png](https://i.postimg.cc/fWYVqvG9/Screenshot-2024-11-29-134957.png)](https://postimg.cc/PNrfP1rX)
+
+
+
+
+## 🔗 Links
+[![Website Link](https://img.shields.io/badge/Website%20Link-020617)](https://vehicledocs360web.vercel.app/)
+[![Static Badge](https://img.shields.io/badge/QR%20Scanner%20Link-111827)](https://vehicledocs360scanner.vercel.app/)
+
+
+
+
+## Feedback
+
+If you have any feedback, please reach out to us at vehicledoc360@gmail.com
+
