@@ -28,10 +28,12 @@ function VehicleDetails() {
     const [qrImg, setQrImg] = useState('');
     const [isQRDialogOpen, setIsQRDialogOpen] = useState(false);
     const [qrDialogLoading, setQrDialogLoading] = useState(true);
+    const [deleteLoading, setDeleteLoading] = useState(false);
 
     const token = localStorage.getItem('token');
 
-    useEffect(() => {
+    function getData() {
+        setResultLoading(true);
         try {
             axios.get("https://vehicledocs360.onrender.com/allVehiclesData", {
                 headers: {
@@ -51,6 +53,10 @@ function VehicleDetails() {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    useEffect(() => {
+        getData();
     }, []);
 
     const handleDetailsBtn = (vehicleId) => {
@@ -96,6 +102,31 @@ function VehicleDetails() {
             console.error(error);
         }
         setIsQRDialogOpen(true);
+    }
+
+    const handleDeleteBtn = (vehicleId) => {
+        let id = vehicleId;
+        setDeleteLoading(true);
+        try {
+            axios.delete(`http://localhost:7000/removeVehicle/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                withCredentials: true
+            })
+                .then(res => {
+                    setDeleteLoading(false);
+                    setIsDialogOpen(false);
+                    getData();
+                })
+                .catch(err => {
+                    console.log(err);
+                    setDeleteLoading(false);
+                    alert("Something Went Wrong");
+                })
+        } catch (error) {
+            console.error(error);
+        }
     }
     return (
         <>
@@ -213,6 +244,11 @@ function VehicleDetails() {
                                         Close
                                     </Button>
                                 </DialogClose>
+                                <Button type="button" variant="destructive" onClick={() => handleDeleteBtn(singleVehicleData._id)}>
+                                    {deleteLoading ? (
+                                        <Loader />
+                                    ) : "Remove Vehicle"}
+                                </Button>
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>
