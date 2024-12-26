@@ -108,7 +108,7 @@ function VehicleDetails() {
         let id = vehicleId;
         setDeleteLoading(true);
         try {
-            axios.delete(`http://localhost:7000/removeVehicle/${id}`, {
+            axios.delete(`https://vehicledocs360.onrender.com/removeVehicle/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
