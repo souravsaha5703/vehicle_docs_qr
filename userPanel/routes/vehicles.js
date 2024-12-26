@@ -90,6 +90,20 @@ router.get("/vehicleData/:id", restrictedToLoggedInUserOnly, async (req, res) =>
 
 // });
 
+router.delete("/removeVehicle/:id", restrictedToLoggedInUserOnly, async (req, res) => {
+    let { id } = req.params;
+    try {
+        const result = await vehicleModel.findByIdAndDelete(id);
+        if (result) {
+            res.status(201).json({ status: 201, success: true, message: "Vehicle successfully deleted" })
+        } else {
+            res.status(400).json({ status: 400, success: false, message: "Error in deleting vehicle" })
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 router.get("/getqr/:id", restrictedToLoggedInUserOnly, async (req, res) => {
     let { id } = req.params;
     try {
