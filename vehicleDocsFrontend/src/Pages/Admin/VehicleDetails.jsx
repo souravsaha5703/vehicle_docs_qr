@@ -35,7 +35,7 @@ function VehicleDetails() {
     function getData() {
         setResultLoading(true);
         try {
-            axios.get("https://vehicledocs360.onrender.com/allVehiclesData", {
+            axios.get("https://vehicle-docs-qr.vercel.app/allVehiclesData", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -63,7 +63,7 @@ function VehicleDetails() {
         let id = vehicleId;
         setDialogLoading(true);
         try {
-            axios.get(`https://vehicledocs360.onrender.com/vehicleData/${id}`, {
+            axios.get(`https://vehicle-docs-qr.vercel.app/vehicleData/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -83,7 +83,7 @@ function VehicleDetails() {
         let id = vehicleId;
         setQrDialogLoading(true);
         try {
-            axios.get(`https://vehicledocs360.onrender.com/getqr/${id}`, {
+            axios.get(`https://vehicle-docs-qr.vercel.app/getqr/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
@@ -108,7 +108,7 @@ function VehicleDetails() {
         let id = vehicleId;
         setDeleteLoading(true);
         try {
-            axios.delete(`https://vehicledocs360.onrender.com/removeVehicle/${id}`, {
+            axios.delete(`https://vehicle-docs-qr.vercel.app/removeVehicle/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },

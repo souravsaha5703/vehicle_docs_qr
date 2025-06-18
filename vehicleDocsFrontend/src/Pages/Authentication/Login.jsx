@@ -30,7 +30,7 @@ function Login() {
         e.preventDefault();
         setLoading(true);
         try {
-            axios.post("https://vehicledocs360.onrender.com/adminLogin", {
+            axios.post("https://vehicle-docs-qr.vercel.app/adminLogin", {
                 username: username,
                 password: password
             }, {
@@ -57,7 +57,7 @@ function Login() {
         e.preventDefault();
         setGuestLoading(true);
         try {
-            axios.post("https://vehicledocs360.onrender.com/guestLogin", {
+            axios.post("https://vehicle-docs-qr.vercel.app/guestLogin", {
                 withCredentials: true
             })
                 .then(res => {

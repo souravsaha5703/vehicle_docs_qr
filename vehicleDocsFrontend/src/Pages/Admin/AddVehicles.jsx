@@ -50,7 +50,7 @@ function AddVehicles() {
         setShowResult(true);
         setSearchLoading(true);
         try {
-            axios.get(`https://vehicledocs360.onrender.com/searchVehicles/${vehicleNo}`, {
+            axios.get(`https://vehicle-docs-qr.vercel.app/searchVehicles/${vehicleNo}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -102,7 +102,7 @@ function AddVehicles() {
             setValidError(false);
             setSubmitLoading(true);
             try {
-                axios.post("https://vehicledocs360.onrender.com/addVehicleDetails", {
+                axios.post("https://vehicle-docs-qr.vercel.app/addVehicleDetails", {
                     ownerName: additionalInfo.ownerName,
                     ownerPhone: additionalInfo.ownerPhone,
                     vehicleNo: vehicleData.detail.registrationNumber,

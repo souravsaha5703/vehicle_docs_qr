@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     try {
-      axios.get("https://vehicledocs360.onrender.com/getAdmin", {
+      axios.get("https://vehicle-docs-qr.vercel.app/getAdmin", {
         headers: {
           Authorization: `Bearer ${token}`
         }

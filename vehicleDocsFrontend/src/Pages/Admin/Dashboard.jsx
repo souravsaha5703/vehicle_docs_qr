@@ -14,7 +14,7 @@ function Dashboard() {
   const today = new Date();
 
   useEffect(() => {
-    axios.get("https://vehicledocs360.onrender.com/dashboard", {
+    axios.get("https://vehicle-docs-qr.vercel.app/dashboard", {
       headers: {
         Authorization: `Bearer ${token}`
       }

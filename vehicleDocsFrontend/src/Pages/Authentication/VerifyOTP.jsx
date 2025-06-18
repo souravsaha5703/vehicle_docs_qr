@@ -28,7 +28,7 @@ function VerifyOTP() {
 
   useEffect(() => {
     try {
-      axios.post("https://vehicledocs360.onrender.com/sendotp", {
+      axios.post("https://vehicle-docs-qr.vercel.app/sendotp", {
         adminEmail: adminEmail
       }, {
         withCredentials: true
@@ -47,7 +47,7 @@ function VerifyOTP() {
   const handleSubmit = () => {
     setLoading(true);
     try {
-      axios.post("https://vehicledocs360.onrender.com/otpverification", {
+      axios.post("https://vehicle-docs-qr.vercel.app/otpverification", {
         otp: otp,
         email: adminEmail
       }, {
@@ -76,7 +76,7 @@ function VerifyOTP() {
     e.preventDefault();
     setResendLoading(true);
     try {
-      axios.post("https://vehicledocs360.onrender.com/sendotp", {
+      axios.post("https://vehicle-docs-qr.vercel.app/sendotp", {
         adminEmail: adminEmail
       }, {
         withCredentials: true
