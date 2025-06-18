@@ -17,10 +17,10 @@ function VerifyData() {
   const sendForVerification = (e) => {
     e.preventDefault();
     setVerifyLoading(true);
-    axios.post("https://vehicledocs360.onrender.com/verifyVehicleDetails", jsonData)
+    axios.post("https://vehicle-docs-qr.vercel.app/verifyVehicleDetails", jsonData)
       .then(res => {
         if (res.data.verified) {
-          axios.post("https://vehicledocs360.onrender.com/createEntry", {
+          axios.post("https://vehicle-docs-qr.vercel.app/createEntry", {
             id: jsonData.vehicleId
           })
             .then(res => {
